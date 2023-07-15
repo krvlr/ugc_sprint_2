@@ -1,0 +1,73 @@
+@startuml
+skinparam componentStyle uml2
+skinparam PackageBackgroundColor #bfffc0
+actor Клиент as Client #Blue
+actor Админ as Admin #Red
+actor Аналитик as Analyst #Grey
+
+component NGINX #LightGrey
+
+
+package ADMIN_PANEL {
+    component Admin_django_service
+}
+
+package AUTH_API {
+    component Auth_API_Flask
+    database auth_db #LightBlue
+    database auth_redis #LightPink
+    component Jaeger
+}
+
+package ASYNC_API {
+    component Async_API_FastApi
+    database movies_redis #LightPink
+    database movies_elasticsearch #LightYellow
+}
+
+package ETL_postgres_to_es {
+    component ETL_service
+    database movies_db #LightBlue
+}
+
+
+package UGC {
+    component UGC_service
+    component ETL_kafka_to_clickhouse
+    database db_clickhouse #Pink
+    database Kafka #Azure
+}
+
+
+Admin_django_service-->movies_db: Администрирование фильмов
+Admin-->Admin_django_service: Администрирование
+
+ETL_service-->movies_db: Проверка что есть новые фильмы
+ETL_service<--movies_db: Новые (обновленные) фильмы
+ETL_service-up->movies_elasticsearch: Загрузка новых фильмов
+
+Client-->NGINX: Авторизация (логин, пароль)
+Client-->NGINX: Обновление токена
+NGINX-->Auth_API_Flask: Авторизация клиента
+NGINX-->Auth_API_Flask: Обновление токена
+Auth_API_Flask<-->auth_redis: Проверка актуальности токена
+Auth_API_Flask<-->auth_db: Проверка пользователя
+Auth_API_Flask-->NGINX: Access токен и refresh токен
+NGINX-->Client: Access токен и refresh токен
+Auth_API_Flask-->Jaeger: Передача логов
+'Admin<-->Auth_API_Flask: Администрирование ролей и прав
+
+Client-->NGINX: Запрос фильма
+NGINX-down->Async_API_FastApi: Запрос фильма
+Async_API_FastApi-->movies_redis: Запрос фильма из кэша
+Async_API_FastApi-->movies_elasticsearch: Запрос фильма, если нет в кэше
+Async_API_FastApi<--movies_elasticsearch: Фильм
+Async_API_FastApi-->NGINX: Предоставление фильма
+NGINX-->Client: Предоставление фильма
+
+ETL_kafka_to_clickhouse<--Kafka: Получить новые записи
+ETL_kafka_to_clickhouse-->db_clickhouse: Загрузить новые записи
+UGC_service-up->db_clickhouse: Запросы на получение данных
+Async_API_FastApi-up->Kafka: Передача событий
+Analyst-up->UGC_service
+@enduml

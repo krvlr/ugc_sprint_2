@@ -1,0 +1,34 @@
+version: "3.5"
+
+services:
+  clickhouse:
+    image: yandex/clickhouse-server:21.3-alpine
+    container_name: clickhouse
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "8G"
+        reservations:
+          cpus: "8"
+          memory: "8G"
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+
+  vertica:
+    image: vertica/vertica-ce:12.0.4-0
+    container_name: vertica
+    hostname: vertica
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "8"
+          memory: "8G"
+        reservations:
+          cpus: "8"
+          memory: "8G"
+    ports:
+      - "5433:5433"

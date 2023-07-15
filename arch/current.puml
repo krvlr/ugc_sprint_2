@@ -1,0 +1,60 @@
+@startuml
+skinparam componentStyle uml2
+skinparam PackageBackgroundColor LightGreen
+actor Клиент as Client #Blue
+actor Админ as Admin #Red
+
+component NGINX #LightGrey
+
+
+package ADMIN_PANEL {
+    component Admin_django_service
+}
+
+package AUTH_API {
+    component Auth_API_Flask
+    database auth_db #LightBlue
+    database auth_redis #LightPink
+    component Jaeger
+}
+
+package ASYNC_API {
+    component Async_API_FastApi
+    database movies_redis #LightPink
+    database movies_elasticsearch #LightYellow
+}
+
+package ETL_postgres_to_es {
+    component ETL_service
+    database movies_db #LightBlue
+}
+
+
+Admin_django_service-->movies_db: Администрирование фильмов
+Admin-->Admin_django_service: Администрирование
+
+ETL_service-->movies_db: Проверка что есть новые фильмы
+ETL_service<--movies_db: Новые (обновленные) фильмы
+ETL_service-up->movies_elasticsearch: Загрузка новых фильмов
+
+Client-->NGINX: Авторизация
+Client-->NGINX: Обновление токена
+NGINX-->Auth_API_Flask: Авторизация
+NGINX-->Auth_API_Flask: Обновление токена
+Auth_API_Flask<-->auth_redis: Проверка токена
+Auth_API_Flask<-->auth_db: Проверка пользователя
+Auth_API_Flask-->NGINX: Токены
+NGINX-->Client: Токены
+Auth_API_Flask-->Jaeger: Логи
+'Admin<-->Auth_API_Flask: Адмминистрирование ролей и прав
+
+Client-->NGINX: Запрос фильма
+NGINX-->Async_API_FastApi: Запрос фильма
+Async_API_FastApi-->movies_redis: Запрос фильма из кэша
+Async_API_FastApi-->movies_elasticsearch: Запрос фильма, если нет в кэше
+Async_API_FastApi<--movies_elasticsearch: Предоставление фильма
+Async_API_FastApi-->NGINX: Предоставление фильма
+NGINX-->Client: Предоставление фильма
+
+
+@enduml
