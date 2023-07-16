@@ -31,7 +31,7 @@ class State:
 
 
 class JsonFileStorage(BaseStorage):
-    def __init__(self, file_path: Optional[str] = "./state.json"):
+    def __init__(self, file_path: str = "./state.json"):
         self.file_path = file_path
 
     def save_state(self, state: dict) -> None:

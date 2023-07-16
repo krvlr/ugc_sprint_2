@@ -1,0 +1,363 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../../mypy-html.css">
+</head>
+<body>
+<h2>flask_auth.src.main</h2>
+<table>
+<caption>flask_auth\src\main.py</caption>
+<tbody><tr>
+<td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
+<span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
+<span id="L3" class="lineno"><a class="lineno" href="#L3">3</a></span>
+<span id="L4" class="lineno"><a class="lineno" href="#L4">4</a></span>
+<span id="L5" class="lineno"><a class="lineno" href="#L5">5</a></span>
+<span id="L6" class="lineno"><a class="lineno" href="#L6">6</a></span>
+<span id="L7" class="lineno"><a class="lineno" href="#L7">7</a></span>
+<span id="L8" class="lineno"><a class="lineno" href="#L8">8</a></span>
+<span id="L9" class="lineno"><a class="lineno" href="#L9">9</a></span>
+<span id="L10" class="lineno"><a class="lineno" href="#L10">10</a></span>
+<span id="L11" class="lineno"><a class="lineno" href="#L11">11</a></span>
+<span id="L12" class="lineno"><a class="lineno" href="#L12">12</a></span>
+<span id="L13" class="lineno"><a class="lineno" href="#L13">13</a></span>
+<span id="L14" class="lineno"><a class="lineno" href="#L14">14</a></span>
+<span id="L15" class="lineno"><a class="lineno" href="#L15">15</a></span>
+<span id="L16" class="lineno"><a class="lineno" href="#L16">16</a></span>
+<span id="L17" class="lineno"><a class="lineno" href="#L17">17</a></span>
+<span id="L18" class="lineno"><a class="lineno" href="#L18">18</a></span>
+<span id="L19" class="lineno"><a class="lineno" href="#L19">19</a></span>
+<span id="L20" class="lineno"><a class="lineno" href="#L20">20</a></span>
+<span id="L21" class="lineno"><a class="lineno" href="#L21">21</a></span>
+<span id="L22" class="lineno"><a class="lineno" href="#L22">22</a></span>
+<span id="L23" class="lineno"><a class="lineno" href="#L23">23</a></span>
+<span id="L24" class="lineno"><a class="lineno" href="#L24">24</a></span>
+<span id="L25" class="lineno"><a class="lineno" href="#L25">25</a></span>
+<span id="L26" class="lineno"><a class="lineno" href="#L26">26</a></span>
+<span id="L27" class="lineno"><a class="lineno" href="#L27">27</a></span>
+<span id="L28" class="lineno"><a class="lineno" href="#L28">28</a></span>
+<span id="L29" class="lineno"><a class="lineno" href="#L29">29</a></span>
+<span id="L30" class="lineno"><a class="lineno" href="#L30">30</a></span>
+<span id="L31" class="lineno"><a class="lineno" href="#L31">31</a></span>
+<span id="L32" class="lineno"><a class="lineno" href="#L32">32</a></span>
+<span id="L33" class="lineno"><a class="lineno" href="#L33">33</a></span>
+<span id="L34" class="lineno"><a class="lineno" href="#L34">34</a></span>
+<span id="L35" class="lineno"><a class="lineno" href="#L35">35</a></span>
+<span id="L36" class="lineno"><a class="lineno" href="#L36">36</a></span>
+<span id="L37" class="lineno"><a class="lineno" href="#L37">37</a></span>
+<span id="L38" class="lineno"><a class="lineno" href="#L38">38</a></span>
+<span id="L39" class="lineno"><a class="lineno" href="#L39">39</a></span>
+<span id="L40" class="lineno"><a class="lineno" href="#L40">40</a></span>
+<span id="L41" class="lineno"><a class="lineno" href="#L41">41</a></span>
+<span id="L42" class="lineno"><a class="lineno" href="#L42">42</a></span>
+<span id="L43" class="lineno"><a class="lineno" href="#L43">43</a></span>
+<span id="L44" class="lineno"><a class="lineno" href="#L44">44</a></span>
+<span id="L45" class="lineno"><a class="lineno" href="#L45">45</a></span>
+<span id="L46" class="lineno"><a class="lineno" href="#L46">46</a></span>
+<span id="L47" class="lineno"><a class="lineno" href="#L47">47</a></span>
+<span id="L48" class="lineno"><a class="lineno" href="#L48">48</a></span>
+<span id="L49" class="lineno"><a class="lineno" href="#L49">49</a></span>
+<span id="L50" class="lineno"><a class="lineno" href="#L50">50</a></span>
+<span id="L51" class="lineno"><a class="lineno" href="#L51">51</a></span>
+<span id="L52" class="lineno"><a class="lineno" href="#L52">52</a></span>
+<span id="L53" class="lineno"><a class="lineno" href="#L53">53</a></span>
+<span id="L54" class="lineno"><a class="lineno" href="#L54">54</a></span>
+<span id="L55" class="lineno"><a class="lineno" href="#L55">55</a></span>
+<span id="L56" class="lineno"><a class="lineno" href="#L56">56</a></span>
+<span id="L57" class="lineno"><a class="lineno" href="#L57">57</a></span>
+<span id="L58" class="lineno"><a class="lineno" href="#L58">58</a></span>
+<span id="L59" class="lineno"><a class="lineno" href="#L59">59</a></span>
+<span id="L60" class="lineno"><a class="lineno" href="#L60">60</a></span>
+<span id="L61" class="lineno"><a class="lineno" href="#L61">61</a></span>
+<span id="L62" class="lineno"><a class="lineno" href="#L62">62</a></span>
+<span id="L63" class="lineno"><a class="lineno" href="#L63">63</a></span>
+<span id="L64" class="lineno"><a class="lineno" href="#L64">64</a></span>
+<span id="L65" class="lineno"><a class="lineno" href="#L65">65</a></span>
+<span id="L66" class="lineno"><a class="lineno" href="#L66">66</a></span>
+<span id="L67" class="lineno"><a class="lineno" href="#L67">67</a></span>
+<span id="L68" class="lineno"><a class="lineno" href="#L68">68</a></span>
+<span id="L69" class="lineno"><a class="lineno" href="#L69">69</a></span>
+<span id="L70" class="lineno"><a class="lineno" href="#L70">70</a></span>
+<span id="L71" class="lineno"><a class="lineno" href="#L71">71</a></span>
+<span id="L72" class="lineno"><a class="lineno" href="#L72">72</a></span>
+<span id="L73" class="lineno"><a class="lineno" href="#L73">73</a></span>
+<span id="L74" class="lineno"><a class="lineno" href="#L74">74</a></span>
+<span id="L75" class="lineno"><a class="lineno" href="#L75">75</a></span>
+<span id="L76" class="lineno"><a class="lineno" href="#L76">76</a></span>
+<span id="L77" class="lineno"><a class="lineno" href="#L77">77</a></span>
+<span id="L78" class="lineno"><a class="lineno" href="#L78">78</a></span>
+<span id="L79" class="lineno"><a class="lineno" href="#L79">79</a></span>
+<span id="L80" class="lineno"><a class="lineno" href="#L80">80</a></span>
+<span id="L81" class="lineno"><a class="lineno" href="#L81">81</a></span>
+<span id="L82" class="lineno"><a class="lineno" href="#L82">82</a></span>
+<span id="L83" class="lineno"><a class="lineno" href="#L83">83</a></span>
+<span id="L84" class="lineno"><a class="lineno" href="#L84">84</a></span>
+<span id="L85" class="lineno"><a class="lineno" href="#L85">85</a></span>
+<span id="L86" class="lineno"><a class="lineno" href="#L86">86</a></span>
+<span id="L87" class="lineno"><a class="lineno" href="#L87">87</a></span>
+<span id="L88" class="lineno"><a class="lineno" href="#L88">88</a></span>
+<span id="L89" class="lineno"><a class="lineno" href="#L89">89</a></span>
+<span id="L90" class="lineno"><a class="lineno" href="#L90">90</a></span>
+<span id="L91" class="lineno"><a class="lineno" href="#L91">91</a></span>
+<span id="L92" class="lineno"><a class="lineno" href="#L92">92</a></span>
+<span id="L93" class="lineno"><a class="lineno" href="#L93">93</a></span>
+<span id="L94" class="lineno"><a class="lineno" href="#L94">94</a></span>
+<span id="L95" class="lineno"><a class="lineno" href="#L95">95</a></span>
+<span id="L96" class="lineno"><a class="lineno" href="#L96">96</a></span>
+<span id="L97" class="lineno"><a class="lineno" href="#L97">97</a></span>
+<span id="L98" class="lineno"><a class="lineno" href="#L98">98</a></span>
+<span id="L99" class="lineno"><a class="lineno" href="#L99">99</a></span>
+<span id="L100" class="lineno"><a class="lineno" href="#L100">100</a></span>
+<span id="L101" class="lineno"><a class="lineno" href="#L101">101</a></span>
+<span id="L102" class="lineno"><a class="lineno" href="#L102">102</a></span>
+<span id="L103" class="lineno"><a class="lineno" href="#L103">103</a></span>
+<span id="L104" class="lineno"><a class="lineno" href="#L104">104</a></span>
+<span id="L105" class="lineno"><a class="lineno" href="#L105">105</a></span>
+<span id="L106" class="lineno"><a class="lineno" href="#L106">106</a></span>
+<span id="L107" class="lineno"><a class="lineno" href="#L107">107</a></span>
+<span id="L108" class="lineno"><a class="lineno" href="#L108">108</a></span>
+<span id="L109" class="lineno"><a class="lineno" href="#L109">109</a></span>
+<span id="L110" class="lineno"><a class="lineno" href="#L110">110</a></span>
+<span id="L111" class="lineno"><a class="lineno" href="#L111">111</a></span>
+<span id="L112" class="lineno"><a class="lineno" href="#L112">112</a></span>
+<span id="L113" class="lineno"><a class="lineno" href="#L113">113</a></span>
+<span id="L114" class="lineno"><a class="lineno" href="#L114">114</a></span>
+<span id="L115" class="lineno"><a class="lineno" href="#L115">115</a></span>
+<span id="L116" class="lineno"><a class="lineno" href="#L116">116</a></span>
+<span id="L117" class="lineno"><a class="lineno" href="#L117">117</a></span>
+<span id="L118" class="lineno"><a class="lineno" href="#L118">118</a></span>
+<span id="L119" class="lineno"><a class="lineno" href="#L119">119</a></span>
+<span id="L120" class="lineno"><a class="lineno" href="#L120">120</a></span>
+<span id="L121" class="lineno"><a class="lineno" href="#L121">121</a></span>
+<span id="L122" class="lineno"><a class="lineno" href="#L122">122</a></span>
+<span id="L123" class="lineno"><a class="lineno" href="#L123">123</a></span>
+<span id="L124" class="lineno"><a class="lineno" href="#L124">124</a></span>
+<span id="L125" class="lineno"><a class="lineno" href="#L125">125</a></span>
+<span id="L126" class="lineno"><a class="lineno" href="#L126">126</a></span>
+<span id="L127" class="lineno"><a class="lineno" href="#L127">127</a></span>
+<span id="L128" class="lineno"><a class="lineno" href="#L128">128</a></span>
+<span id="L129" class="lineno"><a class="lineno" href="#L129">129</a></span>
+</pre></td>
+<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from gevent import monkey</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">monkey.patch_all()</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">import logging.config</span>
+<span class="line-precise" title="No Anys on this line!">from datetime import timedelta</span>
+<span class="line-precise" title="No Anys on this line!">from http import HTTPStatus</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">from api.v1 import auth_handlers</span>
+<span class="line-any" title="No Anys on this line!">from models.common import BaseResponse</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">from flasgger import Swagger</span>
+<span class="line-any" title="No Anys on this line!">from flask import Flask, request, jsonify</span>
+<span class="line-any" title="No Anys on this line!">from flask_jwt_extended import JWTManager</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">from api.v1 import api_auth_bp</span>
+<span class="line-any" title="No Anys on this line!">from api.v1.oauth_handlers import oauth</span>
+<span class="line-any" title="No Anys on this line!">from config.swagger import template, swagger_config</span>
+<span class="line-any" title="No Anys on this line!">from core.config import (</span>
+<span class="line-empty" title="No Anys on this line!">    common_settings,</span>
+<span class="line-empty" title="No Anys on this line!">    jwt_settings,</span>
+<span class="line-empty" title="No Anys on this line!">    role_settings,</span>
+<span class="line-empty" title="No Anys on this line!">    oauth_google_settings,</span>
+<span class="line-empty" title="No Anys on this line!">    oauth_yandex_settings,</span>
+<span class="line-empty" title="No Anys on this line!">)</span>
+<span class="line-any" title="No Anys on this line!">from core.config import jaeger_settings</span>
+<span class="line-any" title="No Anys on this line!">from core.logger import LOGGER_CONFIG</span>
+<span class="line-any" title="No Anys on this line!">from db import init_db, alchemy</span>
+<span class="line-any" title="No Anys on this line!">from db.models.user import User, Role</span>
+<span class="line-any" title="No Anys on this line!">from utils.click_commands import create_admin</span>
+<span class="line-any" title="No Anys on this line!">from utils.exceptions import add_base_exceptions_handlers</span>
+<span class="line-any" title="No Anys on this line!">from utils.jaeger_config import configure_jaeger_tracer</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x1)
+Unimported (x1)">logging.config.dictConfig(LOGGER_CONFIG)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">def create_app():</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">    app = Flask(__name__)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x3)">    configure_jaeger_tracer(app, jaeger_settings.host, jaeger_settings.port)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x3)">    Swagger(app, template=template, config=swagger_config)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">    app.config["SECRET_KEY"] = common_settings.secret_key</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">    app.config.update(</span>
+<span class="line-empty" title="No Anys on this line!">        {</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "JWT_COOKIE_SECURE": jwt_settings.cookie_secure,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">            "JWT_TOKEN_LOCATION": jwt_settings.token_location.split(", "),</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "JWT_SECRET_KEY": jwt_settings.secret_key,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">            "JWT_ACCESS_TOKEN_EXPIRES": timedelta(hours=jwt_settings.access_token_expires),</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">            "JWT_REFRESH_TOKEN_EXPIRES": timedelta(hours=jwt_settings.refresh_token_expires),</span>
+<span class="line-empty" title="No Anys on this line!">        }</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">    add_base_exceptions_handlers(app)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">    @app.before_request</span>
+<span class="line-any" title="No Anys on this line!">    def before_request():</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x1)">        request_id = request.headers.get("X-Request-Id")</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">        if not request_id:</span>
+<span class="line-empty" title="No Anys on this line!">            return (</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">                jsonify(</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">                    BaseResponse(</span>
+<span class="line-any" title="No Anys on this line!">                        success=False, error="Ошибка формата входных данных. Отсутствует request id"</span>
+<span class="line-empty" title="No Anys on this line!">                    ).dict()</span>
+<span class="line-empty" title="No Anys on this line!">                ),</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">                HTTPStatus.BAD_REQUEST,</span>
+<span class="line-empty" title="No Anys on this line!">            )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">    jwt = JWTManager(app)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">    @jwt.user_lookup_loader</span>
+<span class="line-any" title="No Anys on this line!">    def user_lookup_callback(_jwt_header, jwt_data):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x8)
+Unimported (x1)">        return User.query.filter_by(id=jwt_data["sub"]["id"]).one_or_none()</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">    init_db(app)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">    oauth.init_app(app)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">    app.config.update(</span>
+<span class="line-empty" title="No Anys on this line!">        {</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "GOOGLE_CLIENT_ID": oauth_google_settings.client_id,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "GOOGLE_CLIENT_SECRET": oauth_google_settings.client_secret,</span>
+<span class="line-empty" title="No Anys on this line!">        }</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">    oauth.register(</span>
+<span class="line-any" title="No Anys on this line!">        "google",</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">        server_metadata_url=oauth_google_settings.conf_url,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">        client_kwargs={"scope": oauth_google_settings.scope},</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)">    app.config.update(</span>
+<span class="line-empty" title="No Anys on this line!">        {</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "YANDEX_CLIENT_ID": oauth_yandex_settings.client_id,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "YANDEX_CLIENT_SECRET": oauth_yandex_settings.client_secret,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "YANDEX_ACCESS_TOKEN_URL": oauth_yandex_settings.access_token_url,</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)
+Unimported (x1)">            "YANDEX_AUTHORIZE_URL": oauth_yandex_settings.authorize_url,</span>
+<span class="line-empty" title="No Anys on this line!">        }</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)
+Unimported (x1)">    oauth.register("yandex")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x1)">    app.cli.add_command(create_admin)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">    return app</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">app = create_app()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x2)">app.register_blueprint(auth_handlers.auth_bp)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">app.register_blueprint(api_auth_bp)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x5)">app.app_context().push()</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">@app.before_first_request</span>
+<span class="line-any" title="No Anys on this line!">def initial_create():</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x1)">    for role_name, role_description in role_settings.get_initial_roles():</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x6)
+Unimported (x1)">        if not Role.query.filter_by(name=role_name).first():</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x1)">            role = Role(name=role_name, description=role_description)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x4)
+Unimported (x1)">            alchemy.session.add(role)</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Unimported (x1)">            alchemy.session.commit()</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">if __name__ == "__main__":</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">    initial_create()</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">    app.run(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        host=common_settings.host,</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        port=common_settings.port,</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        debug=common_settings.debug,</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+</pre></td>
+</tr></tbody>
+</table>
+</body>
+</html>
