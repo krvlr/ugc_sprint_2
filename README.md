@@ -60,7 +60,7 @@ Cервис авторизации предоставляет возможнос
 ---
 
 1. `db` — раздел с настройками базы `PostgreSQL`.
-2. `flask-auth` — раздел с описанием сервиса авторизации.
+2. `flask_auth` — раздел с описанием сервиса авторизации.
 3. `nginx` — раздел с описанием настроек `nginx` для сервиса авторизации.
 
 ## Пример запуска
@@ -111,6 +111,11 @@ Cервис авторизации предоставляет возможнос
     KAFKA_EXTRACT_TIMEOUT
     KAFKA_GROUP_ID
     KAFKA_AUTO_OFFSET_RESET
+    MONGODB_HOST
+    MONGODB_PORT
+    MONGODB_LOGIN
+    MONGODB_PASSWORD
+    MONGODB_DB_NAME
 
 Теперь можно запустить сборку образа и запуск контейнеров:
 
@@ -125,9 +130,9 @@ Cервис авторизации предоставляет возможнос
 
 Первым шагом необходимо перейти в дирректорию c точкой входа (`main.py`):
 
-    cd /flask-auth/src/
+    cd /flask_auth/src/
 
-Для генерации миграций структуры таблиц, описание которых находится в дирректории `/flask-auth/src/db/models` необходимо выполнить следующую команду:
+Для генерации миграций структуры таблиц, описание которых находится в дирректории `/flask_auth/src/db/models` необходимо выполнить следующую команду:
     
     flask --app main db migrate -m "Описание миграции"
 
@@ -140,14 +145,14 @@ Cервис авторизации предоставляет возможнос
 
 Для запуска тестирования необходимо перейти в папку с тестами:
 
-    cd flask-auth/tests/functional/
+    cd flask_auth/tests/functional/
 
-создать файл `.env` (в качестве примера `flask-auth/tests/functional/.env.example`):
+создать файл `.env` (в качестве примера `flask_auth/tests/functional/.env.example`):
 
     touch .env
 
 указать в нем значения тех же переменных окружения, что и для основного `docker-compose`,
-создать файл `.env.tests` (в качестве примера `flask-auth/tests/functional/.env.tests.example`):
+создать файл `.env.tests` (в качестве примера `flask_auth/tests/functional/.env.tests.example`):
 
     touch .env.tests
 
