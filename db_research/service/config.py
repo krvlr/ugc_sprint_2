@@ -89,7 +89,7 @@ def timeit(func):
     return timeit_wrapper
 
 
-class PostgSettings(BaseSettings):
+class PerformanceSettings(BaseSettings):
     """Общие настройки"""
     dbname: str = Field('postgres', env='POSTGRES_NAME')
     username: str = Field('postgres', env='POSTGRES_USER')
@@ -101,4 +101,4 @@ class PostgSettings(BaseSettings):
         env_file_encoding = 'utf-8'
 
 
-perf_settings = PostgSettings()
+perf_settings = PerformanceSettings()
