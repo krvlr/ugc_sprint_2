@@ -1,12 +1,8 @@
-from pymongo import MongoClient
-import time
-from .config import INIT_RECORDS_ALL, INIT_RECORDS_CHUNK, generate_like, \
-    generate_review, generate_bookmark
 import time
 
 from pymongo import MongoClient
 
-from .config import INIT_RECORDS_ALL, INIT_RECORDS_CHUNK, generate_like, \
+from service.config import INIT_RECORDS_ALL, INIT_RECORDS_CHUNK, generate_like, \
     generate_review, generate_bookmark
 
 MONGO_HOST = "127.0.0.1"
@@ -26,7 +22,8 @@ def generate_objects(chunk_size: int, gen_func) -> list:
     return [(gen_func()) for _ in range(chunk_size)]
 
 
-def insert_mongo_objects(collection_name: str, gen_obj_func, total_size: int, chunk_size: int):
+def insert_mongo_objects(collection_name: str, gen_obj_func, total_size: int,
+                         chunk_size: int):
     collection = mongo_db.get_collection(collection_name)
     inserted = 0
     while inserted < total_size:
@@ -42,20 +39,26 @@ def get_mongo_objects(collection_name: str, query: dict):
 
 def research_inserts_mongo(total_records_per_table, chunk_size):
     for coll_name, gener_func in gen_funcs.items():
-        insert_mongo_objects(coll_name, gener_func, total_records_per_table, chunk_size)
+        insert_mongo_objects(coll_name, gener_func, total_records_per_table,
+                             chunk_size)
+
+
+def clear_mongo():
+    for coll_name in gen_funcs.keys():
+        mongo_db.get_collection(coll_name).drop()
 
 
 def fill_mongo():
+    clear_mongo()
     research_inserts_mongo(INIT_RECORDS_ALL, INIT_RECORDS_CHUNK)
 
 
 if __name__ == "__main__":
     try:
-        for coll_name, gener_func in gen_funcs.items():
-            start_time = time.perf_counter()
-            insert_mongo_objects(coll_name, gener_func, 1000000, 10000)
-            end_time = time.perf_counter()
-            total_time = end_time - start_time
-            print(f'Took {total_time:.4f} seconds')
+        start_time = time.perf_counter()
+        clear_mongo()
+        end_time = time.perf_counter()
+        total_time = end_time - start_time
+        print(f'Took {total_time:.4f} seconds')
     except Exception as ex:
         print(f'Error {ex}')

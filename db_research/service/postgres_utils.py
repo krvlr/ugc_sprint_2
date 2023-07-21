@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2 import sql
 from psycopg2.extras import DictCursor
 
-from db_research.service.config import perf_settings, user_ids, movie_ids, \
+from service.config import perf_settings, user_ids, movie_ids, \
     timeit, INIT_RECORDS_ALL, INIT_RECORDS_CHUNK
 
 
@@ -63,11 +63,11 @@ def get_query_select_likes():
 
 
 def get_query_select_reviews():
-    return "SELECT * FROM events.reviews WHERE %s=%s"
+    return "SELECT * FROM events.reviews WHERE {param}=%s"
 
 
 def get_query_select_bookmarks():
-    return "SELECT * FROM events.bookmarks WHERE %s=%s"
+    return "SELECT * FROM events.bookmarks WHERE {param}=%s"
 
 
 def generate_like_pg():
@@ -114,7 +114,6 @@ def insert_chunk_pg(total_size: int, chunk_size: int, table_name: str):
         with conn.cursor(cursor_factory=DictCursor) as cursor:
             inserted = 0
             insert_query = queries_insert[table_name]
-            print(insert_query)
             while inserted < total_size:
                 input_data = generate_chunk(chunk_size, generate_funcs[table_name])
                 psycopg2.extras.execute_values(
@@ -135,7 +134,6 @@ def select_objects_pg(table_name: str, params: dict):
             sql_comm = sql.SQL(select_query).format(param=sql.Identifier(param[0]))
             cursor.execute(sql_comm, (param[1],))
             rows = cursor.fetchall()
-            print(len(rows))
             return rows
 
 
@@ -144,18 +142,16 @@ def research_inserts_pg(total_records_per_table, chunk_size):
         insert_chunk_pg(total_records_per_table, chunk_size, table_name)
 
 
-@timeit
-def fill_postgres_db(total_size: int, chunk_size: int):
-    insert_chunk_pg(total_size, chunk_size, 'likes')
-    insert_chunk_pg(total_size, chunk_size, 'reviews')
-    insert_chunk_pg(total_size, chunk_size, 'bookmarks')
+def fill_postgres_db():
+    create_db()
+    research_inserts_pg(INIT_RECORDS_ALL, INIT_RECORDS_CHUNK)
 
 
 if __name__ == "__main__":
     try:
         # start_time = time.perf_counter()
         create_db()
-        fill_postgres_db(INIT_RECORDS_ALL, INIT_RECORDS_CHUNK)
+        fill_postgres_db()
         select_objects_pg('likes', {'like_score': 1})
         # end_time = time.perf_counter()
         # total_time = end_time - start_time

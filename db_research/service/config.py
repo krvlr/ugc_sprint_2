@@ -15,9 +15,9 @@ INIT_RECORDS_ALL = 1000000
 
 INIT_RECORDS_CHUNK = 10000
 
-COUNT_OF_SELECTS = 10000
+COUNT_OF_SELECTS = 15
 
-COUNT_OF_INSERTS = 5
+COUNT_OF_INSERTS = 15
 
 user_ids = [str(uuid4()) for _ in range(USERS_COUNT)]
 movie_ids = [str(uuid4()) for _ in range(MOVIES_COUNT)]
