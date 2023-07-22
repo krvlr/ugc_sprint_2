@@ -501,8 +501,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data1:/data/db
-    ports:
-      - 27017:27017
     expose:
       - "27017"
     networks:
@@ -516,8 +514,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data2:/data/db
-    ports:
-      - 27027:27017
     expose:
       - "27017"
     networks:
@@ -531,8 +527,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data3:/data/db
-    ports:
-      - 27037:27017
     expose:
       - "27017"
     networks:
@@ -546,8 +540,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data4:/data/db
-    ports:
-      - 27047:27017
     expose:
       - "27017"
     networks:
@@ -561,8 +553,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data5:/data/db
-    ports:
-      - 27057:27017
     expose:
       - "27017"
     networks:
@@ -576,8 +566,6 @@ services:
       - ./mingodb_scripts:/scripts
       - /etc/localtime:/etc/localtime:ro
       - mongo_data6:/data/db
-    ports:
-      - 27067:27017
     expose:
       - "27017"
     networks:

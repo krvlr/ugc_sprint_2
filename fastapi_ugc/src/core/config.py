@@ -8,15 +8,17 @@ class BaseConfig(BaseSettings):
 
 
 class BaseSettings(BaseConfig):
-    project_name: str = Field(default="ugc", env="PROJECT_NAME")
+    project_name: str = Field(default="UGC2", env="PROJECT_NAME")
+    secret_key: str = Field(default="SUPER-SECRET-KEY", repr=False, env="JWT_SECRET_KEY")
 
 
 class MongodbSettings(BaseConfig):
     host: str = Field(default="127.0.0.1", env="MONGODB_HOST")
-    port: int = Field(default=27017, env="MONGODB_PORT")
-    login: str = Field(default="", env="MONGODB_LOGIN")
-    password: str = Field(default="", env="MONGODB_PASSWORD")
+    port: int = Field(default=27019, env="MONGODB_PORT")
+    login: str = Field(default="default", env="MONGODB_LOGIN")
+    password: str = Field(default="default_password", env="MONGODB_PASSWORD")
     db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")
+    collection_bookmark: str = Field(default="bookmark", env="MONGODB_COLLECTION_BOOKMARK")
 
 
 class LoggerSettings(BaseConfig):

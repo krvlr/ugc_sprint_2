@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
+</head>
+<body>
+<h2>src.core.config</h2>
+<table>
+<caption>fastapi_ugc\src\core\config.py</caption>
+<tbody><tr>
+<td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
+<span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
+<span id="L3" class="lineno"><a class="lineno" href="#L3">3</a></span>
+<span id="L4" class="lineno"><a class="lineno" href="#L4">4</a></span>
+<span id="L5" class="lineno"><a class="lineno" href="#L5">5</a></span>
+<span id="L6" class="lineno"><a class="lineno" href="#L6">6</a></span>
+<span id="L7" class="lineno"><a class="lineno" href="#L7">7</a></span>
+<span id="L8" class="lineno"><a class="lineno" href="#L8">8</a></span>
+<span id="L9" class="lineno"><a class="lineno" href="#L9">9</a></span>
+<span id="L10" class="lineno"><a class="lineno" href="#L10">10</a></span>
+<span id="L11" class="lineno"><a class="lineno" href="#L11">11</a></span>
+<span id="L12" class="lineno"><a class="lineno" href="#L12">12</a></span>
+<span id="L13" class="lineno"><a class="lineno" href="#L13">13</a></span>
+<span id="L14" class="lineno"><a class="lineno" href="#L14">14</a></span>
+<span id="L15" class="lineno"><a class="lineno" href="#L15">15</a></span>
+<span id="L16" class="lineno"><a class="lineno" href="#L16">16</a></span>
+<span id="L17" class="lineno"><a class="lineno" href="#L17">17</a></span>
+<span id="L18" class="lineno"><a class="lineno" href="#L18">18</a></span>
+<span id="L19" class="lineno"><a class="lineno" href="#L19">19</a></span>
+<span id="L20" class="lineno"><a class="lineno" href="#L20">20</a></span>
+<span id="L21" class="lineno"><a class="lineno" href="#L21">21</a></span>
+<span id="L22" class="lineno"><a class="lineno" href="#L22">22</a></span>
+<span id="L23" class="lineno"><a class="lineno" href="#L23">23</a></span>
+<span id="L24" class="lineno"><a class="lineno" href="#L24">24</a></span>
+<span id="L25" class="lineno"><a class="lineno" href="#L25">25</a></span>
+<span id="L26" class="lineno"><a class="lineno" href="#L26">26</a></span>
+<span id="L27" class="lineno"><a class="lineno" href="#L27">27</a></span>
+<span id="L28" class="lineno"><a class="lineno" href="#L28">28</a></span>
+<span id="L29" class="lineno"><a class="lineno" href="#L29">29</a></span>
+<span id="L30" class="lineno"><a class="lineno" href="#L30">30</a></span>
+<span id="L31" class="lineno"><a class="lineno" href="#L31">31</a></span>
+<span id="L32" class="lineno"><a class="lineno" href="#L32">32</a></span>
+<span id="L33" class="lineno"><a class="lineno" href="#L33">33</a></span>
+<span id="L34" class="lineno"><a class="lineno" href="#L34">34</a></span>
+<span id="L35" class="lineno"><a class="lineno" href="#L35">35</a></span>
+</pre></td>
+<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from pydantic import Field</span>
+<span class="line-any" title="No Anys on this line!">from pydantic_settings import BaseSettings</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class BaseConfig(BaseSettings):</span>
+<span class="line-precise" title="No Anys on this line!">    class Config:</span>
+<span class="line-precise" title="No Anys on this line!">        env_file = ".env"</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class BaseSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    project_name: str = Field(default="UGC2", env="PROJECT_NAME")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    secret_key: str = Field(default="SUPER-SECRET-KEY", repr=False, env="JWT_SECRET_KEY")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class MongodbSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="127.0.0.1", env="MONGODB_HOST")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    port: int = Field(default=27019, env="MONGODB_PORT")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    login: str = Field(default="default", env="MONGODB_LOGIN")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    password: str = Field(default="default_password", env="MONGODB_PASSWORD")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    collection_bookmark: str = Field(default="bookmark", env="MONGODB_COLLECTION_BOOKMARK")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class LoggerSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    debug: str = Field(default="True", env="DEBUG")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    level: str = Field(default="INFO", env="LOGGING_LEVEL")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    format: str = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", env="LOG_FORMAT"</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x2)">    default_handlers: list = ["console"]</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">base_settings = BaseSettings()</span>
+<span class="line-precise" title="No Anys on this line!">mongodb_settings = MongodbSettings()</span>
+<span class="line-precise" title="No Anys on this line!">logger_settings = LoggerSettings()</span>
+</pre></td>
+</tr></tbody>
+</table>
+</body>
+</html>
