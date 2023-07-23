@@ -38,6 +38,11 @@ package UGC {
     database Kafka #Azure
 }
 
+package UGC2 {
+    component UGC2_service
+    database mongodb #Pink
+}
+
 
 Admin_django_service-->movies_db: Администрирование фильмов
 Admin-->Admin_django_service: Администрирование
@@ -70,4 +75,12 @@ ETL_kafka_to_clickhouse-->db_clickhouse: Загрузить новые запи�
 UGC_service-up->db_clickhouse: Запросы на получение данных
 Async_API_FastApi-up->Kafka: Передача событий
 Analyst-up->UGC_service
+
+Client-->NGINX: Добавление оценки / закладки / отзывы
+NGINX-up->UGC2_service: Запрос оценки / закладки / отзывы
+UGC2_service-->mongodb: Запросы на получение данных
+mongodb-->UGC2_service: Предоставление данных
+UGC2_service-->NGINX: Предоставление оценки / закладки / отзывы
+NGINX-->Client: Предоставление оценки / закладки / отзывы
+
 @enduml

@@ -7,6 +7,15 @@ volumes:
   redis_data:
   elasticsearch_data:
   jaeger_volume:
+  mongo_data1:
+  mongo_data2:
+  mongo_data3:
+  mongo_data4:
+  mongo_data5:
+  mongo_data6:
+  mongo_config1:
+  mongo_config2:
+  mongo_config3:
 
 networks:
   movies_network:
@@ -483,3 +492,158 @@ services:
       - zookeeper
     networks:
       - ugc_network
+
+  mongors1n1:
+    container_name: mongors1n1
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data1:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors1n2:
+    container_name: mongors1n2
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data2:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors1n3:
+    container_name: mongors1n3
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data3:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n1:
+    container_name: mongors2n1
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data4:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n2:
+    container_name: mongors2n2
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data5:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n3:
+    container_name: mongors2n3
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_data6:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg1:
+    container_name: mongocfg1
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_config1:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg2:
+    container_name: mongocfg2
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_config2:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg3:
+    container_name: mongocfg3
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - mongo_config3:/data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongos1:
+    container_name: mongos1
+    image: mongo
+    depends_on:
+      - mongocfg1
+      - mongocfg2
+    command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017 --bind_ip_all
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 27019:27017
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  api-ugc2:
+    build:
+      context: fastapi_ugc
+      dockerfile: Dockerfile
+    container_name: api-ugc2
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: "curl -H 'X-Request-Id: ${AUTH_HEALTHCHECK_REQUEST_ID}' --fail http://127.0.0.1:8000/api/v1/health || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - .env
+    networks:
+      - ugc_network
+    expose:
+      - "8000"
