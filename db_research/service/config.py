@@ -58,10 +58,10 @@ def timeit(func):
 
 class PerformanceSettings(BaseSettings):
     """Общие настройки"""
-    dbname: str = Field('postgres', env='POSTGRES_NAME')
-    username: str = Field('postgres', env='POSTGRES_USER')
-    password: str = Field('postgres', env='POSTGRES_PASSWORD')
-    host: str = Field('localhost', env='POSTGRES_HOST')
+    dbname: str = Field(default='postgres', env='POSTGRES_NAME')
+    username: str = Field(default='postgres', env='POSTGRES_USER')
+    password: str = Field(default='postgres', env='POSTGRES_PASSWORD')
+    host: str = Field(default='localhost', env='POSTGRES_HOST')
 
     class Config:
         env_file = '.env'

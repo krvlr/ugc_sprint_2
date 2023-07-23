@@ -132,20 +132,6 @@ def insert_chunk_pg(total_size: int, chunk_size: int, table_name: str):
                 conn.commit()
                 inserted += chunk_size
 
-#
-# def select_objects_pg(table_name: str, params: dict):
-#     with closing(psycopg2.connect(dbname=perf_settings.dbname,
-#                                   user=perf_settings.username,
-#                                   password=perf_settings.password,
-#                                   host=perf_settings.host)) as conn:
-#         with conn.cursor(cursor_factory=DictCursor) as cursor:
-#             select_query = queries_select[table_name]
-#             param = list(params.items())[0]
-#             sql_comm = sql.SQL(select_query).format(param=sql.Identifier(param[0]))
-#             cursor.execute(sql_comm, (param[1],))
-#             rows = cursor.fetchall()
-#             return rows
-
 
 def fill_postgres_db():
     print('Started filling pg')
@@ -156,8 +142,10 @@ def fill_postgres_db():
     print('Filling pg time ', round(time() - start, 4))
 
 
-def time_execute_pg(cursor: DictCursor, query: str | Composed, values: list | dict | tuple = None,
-    insert=False) -> float:
+def time_execute_pg(cursor: DictCursor,
+                    query: str | Composed,
+                    values: list | dict | tuple | None = None,
+                    insert=False) -> float:
     start = time()
     if insert:
         psycopg2.extras.execute_values(

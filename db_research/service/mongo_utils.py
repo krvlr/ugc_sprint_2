@@ -4,12 +4,13 @@ from time import time
 
 from pymongo import MongoClient
 from pymongo.collection import Collection
+from typing import Iterable, Any
 
 from db_research.service.config import (INIT_RECORDS_ALL, INIT_RECORDS_CHUNK,
                                         COUNT_OF_SELECTS)
 from db_research.service.config import user_ids, movie_ids
 
-mongo_cl = MongoClient('mongodb://root:example@localhost:27017/')
+mongo_cl: MongoClient = MongoClient('mongodb://root:example@localhost:27017/')
 mongo_db = mongo_cl.get_database('events')
 
 likes_collection = mongo_db.get_collection('likes')
@@ -17,7 +18,7 @@ reviews_collection = mongo_db.get_collection('reviews')
 bookmarks_collection = mongo_db.get_collection('bookmarks')
 
 
-def generate_like(movie_id: str = None) -> dict:
+def generate_like(movie_id: str | None = None) -> dict:
     return {
         "user_id": random.choice(user_ids),
         "movie_id": movie_id if movie_id else random.choice(movie_ids),
@@ -88,9 +89,10 @@ def fill_mongo():
     print('Filling mongo time ', round(time() - start, 4))
 
 
-def time_execute_mongo(collection: Collection, query: list | dict = None,
-    values: list | dict = None,
-    type_f='Find') -> float:
+def time_execute_mongo(collection,
+                       query: list | dict | None = None,
+                       values: list | dict | None | Iterable[Any] = None,
+                       type_f='Find') -> float:
     start = time()
     if type_f == 'Insert':
         collection.insert_many(values)
