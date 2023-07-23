@@ -1,5 +1,4 @@
-import datetime
-import random
+
 import time
 from functools import wraps
 from uuid import uuid4
@@ -15,45 +14,13 @@ INIT_RECORDS_ALL = 1000000
 
 INIT_RECORDS_CHUNK = 10000
 
-COUNT_OF_SELECTS = 15
+COUNT_OF_SELECTS = 1000
 
 COUNT_OF_INSERTS = 15
 
 user_ids = [str(uuid4()) for _ in range(USERS_COUNT)]
 movie_ids = [str(uuid4()) for _ in range(MOVIES_COUNT)]
 
-
-def generate_like() -> dict:
-    return {
-        "user_id": random.choice(user_ids),
-        "movie_id": random.choice(movie_ids),
-        "like": random.randint(0, 1),
-        'created_at': datetime.datetime.now(),
-        'updated_at': datetime.datetime.now(),
-    }
-
-
-def generate_review() -> dict:
-    user = random.choice(user_ids)
-    movie = random.choice(movie_ids)
-    return {
-        'user_id': user,
-        'movie_id': movie,
-        'review': f'Review of {movie} from {user} ',
-        'created_at': datetime.datetime.now(),
-        'updated_at': datetime.datetime.now(),
-    }
-
-
-def generate_bookmark() -> dict:
-    user = random.choice(user_ids)
-    movie = random.choice(movie_ids)
-    return {
-        'user_id': user,
-        'movie_id': movie,
-        'created_at': datetime.datetime.now(),
-        'updated_at': datetime.datetime.now(),
-    }
 
 CHUNKS = [
     100,
@@ -72,8 +39,8 @@ CHUNKS = [
     1_000_000,
 ]
 
-DATA_SELECTING_RESULT_FILE_NAME = "data_selecting_results.csv"
-DATA_INSERTING_RESULT_FILE_NAME = "data_inserting_results.csv"
+SELECTING_RESULT_FILE_NAME = "selecting_results.csv"
+INSERTING_RESULT_FILE_NAME = "inserting_results.csv"
 
 
 def timeit(func):
