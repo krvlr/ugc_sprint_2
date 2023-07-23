@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - ./db/movies_database.sql:/docker-entrypoint-initdb.d/movies_database.sql
+      - ./movies_db/movies_database.sql:/docker-entrypoint-initdb.d/movies_database.sql
     networks:
       - movies_network
     healthcheck:
@@ -88,7 +88,7 @@ services:
 
   api:
     build:
-      context: ./fastapi-solution
+      context: fastapi_solution
       dockerfile: Dockerfile
     container_name: api-movies
     restart: always
@@ -146,7 +146,7 @@ services:
 
   api-auth:
     build:
-      context: ./flask-auth
+      context: flask_auth
       dockerfile: Dockerfile
     container_name: api-auth
     restart: always

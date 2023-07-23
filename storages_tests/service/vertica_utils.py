@@ -13,7 +13,7 @@ def select_movies_ids(cursor) -> list[str]:
     return ["".join(row) for row in rows]
 
 
-def time_execute(cursor, query: str, values: list | dict = None, insert=False) -> float:
+def time_execute(cursor, query: str, values: list | dict | None = None, insert=False) -> float:
     start = time()
     if insert:
         cursor.executemany(query, values, use_prepared_statements=False)

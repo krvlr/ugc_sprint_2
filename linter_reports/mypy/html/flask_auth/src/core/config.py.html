@@ -1,0 +1,293 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
+</head>
+<body>
+<h2>flask_auth.src.core.config</h2>
+<table>
+<caption>flask_auth\src\core\config.py</caption>
+<tbody><tr>
+<td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
+<span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
+<span id="L3" class="lineno"><a class="lineno" href="#L3">3</a></span>
+<span id="L4" class="lineno"><a class="lineno" href="#L4">4</a></span>
+<span id="L5" class="lineno"><a class="lineno" href="#L5">5</a></span>
+<span id="L6" class="lineno"><a class="lineno" href="#L6">6</a></span>
+<span id="L7" class="lineno"><a class="lineno" href="#L7">7</a></span>
+<span id="L8" class="lineno"><a class="lineno" href="#L8">8</a></span>
+<span id="L9" class="lineno"><a class="lineno" href="#L9">9</a></span>
+<span id="L10" class="lineno"><a class="lineno" href="#L10">10</a></span>
+<span id="L11" class="lineno"><a class="lineno" href="#L11">11</a></span>
+<span id="L12" class="lineno"><a class="lineno" href="#L12">12</a></span>
+<span id="L13" class="lineno"><a class="lineno" href="#L13">13</a></span>
+<span id="L14" class="lineno"><a class="lineno" href="#L14">14</a></span>
+<span id="L15" class="lineno"><a class="lineno" href="#L15">15</a></span>
+<span id="L16" class="lineno"><a class="lineno" href="#L16">16</a></span>
+<span id="L17" class="lineno"><a class="lineno" href="#L17">17</a></span>
+<span id="L18" class="lineno"><a class="lineno" href="#L18">18</a></span>
+<span id="L19" class="lineno"><a class="lineno" href="#L19">19</a></span>
+<span id="L20" class="lineno"><a class="lineno" href="#L20">20</a></span>
+<span id="L21" class="lineno"><a class="lineno" href="#L21">21</a></span>
+<span id="L22" class="lineno"><a class="lineno" href="#L22">22</a></span>
+<span id="L23" class="lineno"><a class="lineno" href="#L23">23</a></span>
+<span id="L24" class="lineno"><a class="lineno" href="#L24">24</a></span>
+<span id="L25" class="lineno"><a class="lineno" href="#L25">25</a></span>
+<span id="L26" class="lineno"><a class="lineno" href="#L26">26</a></span>
+<span id="L27" class="lineno"><a class="lineno" href="#L27">27</a></span>
+<span id="L28" class="lineno"><a class="lineno" href="#L28">28</a></span>
+<span id="L29" class="lineno"><a class="lineno" href="#L29">29</a></span>
+<span id="L30" class="lineno"><a class="lineno" href="#L30">30</a></span>
+<span id="L31" class="lineno"><a class="lineno" href="#L31">31</a></span>
+<span id="L32" class="lineno"><a class="lineno" href="#L32">32</a></span>
+<span id="L33" class="lineno"><a class="lineno" href="#L33">33</a></span>
+<span id="L34" class="lineno"><a class="lineno" href="#L34">34</a></span>
+<span id="L35" class="lineno"><a class="lineno" href="#L35">35</a></span>
+<span id="L36" class="lineno"><a class="lineno" href="#L36">36</a></span>
+<span id="L37" class="lineno"><a class="lineno" href="#L37">37</a></span>
+<span id="L38" class="lineno"><a class="lineno" href="#L38">38</a></span>
+<span id="L39" class="lineno"><a class="lineno" href="#L39">39</a></span>
+<span id="L40" class="lineno"><a class="lineno" href="#L40">40</a></span>
+<span id="L41" class="lineno"><a class="lineno" href="#L41">41</a></span>
+<span id="L42" class="lineno"><a class="lineno" href="#L42">42</a></span>
+<span id="L43" class="lineno"><a class="lineno" href="#L43">43</a></span>
+<span id="L44" class="lineno"><a class="lineno" href="#L44">44</a></span>
+<span id="L45" class="lineno"><a class="lineno" href="#L45">45</a></span>
+<span id="L46" class="lineno"><a class="lineno" href="#L46">46</a></span>
+<span id="L47" class="lineno"><a class="lineno" href="#L47">47</a></span>
+<span id="L48" class="lineno"><a class="lineno" href="#L48">48</a></span>
+<span id="L49" class="lineno"><a class="lineno" href="#L49">49</a></span>
+<span id="L50" class="lineno"><a class="lineno" href="#L50">50</a></span>
+<span id="L51" class="lineno"><a class="lineno" href="#L51">51</a></span>
+<span id="L52" class="lineno"><a class="lineno" href="#L52">52</a></span>
+<span id="L53" class="lineno"><a class="lineno" href="#L53">53</a></span>
+<span id="L54" class="lineno"><a class="lineno" href="#L54">54</a></span>
+<span id="L55" class="lineno"><a class="lineno" href="#L55">55</a></span>
+<span id="L56" class="lineno"><a class="lineno" href="#L56">56</a></span>
+<span id="L57" class="lineno"><a class="lineno" href="#L57">57</a></span>
+<span id="L58" class="lineno"><a class="lineno" href="#L58">58</a></span>
+<span id="L59" class="lineno"><a class="lineno" href="#L59">59</a></span>
+<span id="L60" class="lineno"><a class="lineno" href="#L60">60</a></span>
+<span id="L61" class="lineno"><a class="lineno" href="#L61">61</a></span>
+<span id="L62" class="lineno"><a class="lineno" href="#L62">62</a></span>
+<span id="L63" class="lineno"><a class="lineno" href="#L63">63</a></span>
+<span id="L64" class="lineno"><a class="lineno" href="#L64">64</a></span>
+<span id="L65" class="lineno"><a class="lineno" href="#L65">65</a></span>
+<span id="L66" class="lineno"><a class="lineno" href="#L66">66</a></span>
+<span id="L67" class="lineno"><a class="lineno" href="#L67">67</a></span>
+<span id="L68" class="lineno"><a class="lineno" href="#L68">68</a></span>
+<span id="L69" class="lineno"><a class="lineno" href="#L69">69</a></span>
+<span id="L70" class="lineno"><a class="lineno" href="#L70">70</a></span>
+<span id="L71" class="lineno"><a class="lineno" href="#L71">71</a></span>
+<span id="L72" class="lineno"><a class="lineno" href="#L72">72</a></span>
+<span id="L73" class="lineno"><a class="lineno" href="#L73">73</a></span>
+<span id="L74" class="lineno"><a class="lineno" href="#L74">74</a></span>
+<span id="L75" class="lineno"><a class="lineno" href="#L75">75</a></span>
+<span id="L76" class="lineno"><a class="lineno" href="#L76">76</a></span>
+<span id="L77" class="lineno"><a class="lineno" href="#L77">77</a></span>
+<span id="L78" class="lineno"><a class="lineno" href="#L78">78</a></span>
+<span id="L79" class="lineno"><a class="lineno" href="#L79">79</a></span>
+<span id="L80" class="lineno"><a class="lineno" href="#L80">80</a></span>
+<span id="L81" class="lineno"><a class="lineno" href="#L81">81</a></span>
+<span id="L82" class="lineno"><a class="lineno" href="#L82">82</a></span>
+<span id="L83" class="lineno"><a class="lineno" href="#L83">83</a></span>
+<span id="L84" class="lineno"><a class="lineno" href="#L84">84</a></span>
+<span id="L85" class="lineno"><a class="lineno" href="#L85">85</a></span>
+<span id="L86" class="lineno"><a class="lineno" href="#L86">86</a></span>
+<span id="L87" class="lineno"><a class="lineno" href="#L87">87</a></span>
+<span id="L88" class="lineno"><a class="lineno" href="#L88">88</a></span>
+<span id="L89" class="lineno"><a class="lineno" href="#L89">89</a></span>
+<span id="L90" class="lineno"><a class="lineno" href="#L90">90</a></span>
+<span id="L91" class="lineno"><a class="lineno" href="#L91">91</a></span>
+<span id="L92" class="lineno"><a class="lineno" href="#L92">92</a></span>
+<span id="L93" class="lineno"><a class="lineno" href="#L93">93</a></span>
+<span id="L94" class="lineno"><a class="lineno" href="#L94">94</a></span>
+<span id="L95" class="lineno"><a class="lineno" href="#L95">95</a></span>
+<span id="L96" class="lineno"><a class="lineno" href="#L96">96</a></span>
+<span id="L97" class="lineno"><a class="lineno" href="#L97">97</a></span>
+<span id="L98" class="lineno"><a class="lineno" href="#L98">98</a></span>
+<span id="L99" class="lineno"><a class="lineno" href="#L99">99</a></span>
+<span id="L100" class="lineno"><a class="lineno" href="#L100">100</a></span>
+<span id="L101" class="lineno"><a class="lineno" href="#L101">101</a></span>
+<span id="L102" class="lineno"><a class="lineno" href="#L102">102</a></span>
+<span id="L103" class="lineno"><a class="lineno" href="#L103">103</a></span>
+<span id="L104" class="lineno"><a class="lineno" href="#L104">104</a></span>
+<span id="L105" class="lineno"><a class="lineno" href="#L105">105</a></span>
+<span id="L106" class="lineno"><a class="lineno" href="#L106">106</a></span>
+<span id="L107" class="lineno"><a class="lineno" href="#L107">107</a></span>
+<span id="L108" class="lineno"><a class="lineno" href="#L108">108</a></span>
+<span id="L109" class="lineno"><a class="lineno" href="#L109">109</a></span>
+</pre></td>
+<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from pathlib import Path</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">from pydantic import BaseSettings, Field, AnyUrl</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="Any Types on this line: 
+Explicit (x1)">BASE_DIR = Path(__file__).resolve().parent.parent</span>
+<span class="line-precise" title="No Anys on this line!">MIGRATION_DIR = BASE_DIR / "db" / "migrations"</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class BaseConfig(BaseSettings):</span>
+<span class="line-precise" title="No Anys on this line!">    class Config:</span>
+<span class="line-precise" title="No Anys on this line!">        env_file = ".env"</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class LoggerSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    level: str = Field(default="INFO", env="LOGGING_LEVEL")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    format: str = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", env="LOG_FORMAT"</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x2)">    default_handlers: list = ["console"]</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class CommonSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    secret_key: str = Field(repr=False, env="FLASK_SECRET_KEY")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    debug: bool = Field(default=True, env="DEBUG")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="0.0.0.0")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    port: str = Field(default="8000")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    request_limit_per_minute: int = Field(default=20, env="REQUEST_LIMIT_PER_MINUTE")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class PostgreSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="127.0.0.1", env="AUTH_DB_HOST")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    port: str = Field(default="5432", env="AUTH_DB_PORT")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    name: str = Field(default="auth_database", env="AUTH_DB_NAME")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    user: str = Field(default="admin", env="AUTH_DB_USER")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    password: str = Field(default="admin", env="AUTH_DB_PASSWORD")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">    def get_db_uri(self) -&gt; str:</span>
+<span class="line-precise" title="No Anys on this line!">        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class RedisSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="127.0.0.1", env="AUTH_REDIS_HOST")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    port: str = Field(default="6379", env="AUTH_REDIS_PORT")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class JWTSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    cookie_secure: str = Field(default="False", repr=False, env="JWT_COOKIE_SECURE")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    token_location: str = Field(default="cookies", repr=False, env="JWT_TOKEN_LOCATION")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    secret_key: str = Field(default="SUPER-SECRET-KEY", repr=False, env="JWT_SECRET_KEY")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    access_token_expires: int = Field(default=1, env="JWT_ACCESS_TOKEN_EXPIRES")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    refresh_token_expires: int = Field(default=30, env="JWT_REFRESH_TOKEN_EXPIRES")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class RoleSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    default_user_role: str = Field(default="default", env="DEFAULT_USER_ROLE")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    initial_user_roles: str = Field(default="default", env="INITIAL_USER_ROLES")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    initial_user_descrition_roles: str = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="Base rights for a registered user", env="INITIAL_USER_DESCRIPTION_ROLES"</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">    def get_initial_roles(self):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)
+Omitted Generics (x30)
+Explicit (x8)">        for role, descrition in zip(</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x6)">            self.initial_user_roles.split(", "), self.initial_user_descrition_roles.split(", ")</span>
+<span class="line-empty" title="No Anys on this line!">        ):</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x2)">            yield role, descrition</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class JaegerSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    enable_tracer: bool = Field(default=True, env="ENABLE_TRACER")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="127.0.0.1", env="JAEGER_HOST")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    port: int = Field(default=6831, env="JAEGER_PORT")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class OAuthGoogleSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    client_id: str = Field(default="", env="GOOGLE_CLIENT_ID")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    client_secret: str = Field(default="", env="GOOGLE_CLIENT_SECRET", repr=False)</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    conf_url: AnyUrl = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="https://accounts.google.com/.well-known/openid-configuration",</span>
+<span class="line-precise" title="No Anys on this line!">        env="GOOGLE_CONF_URL",</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    scope: str = Field(default="openid email profile", env="")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class OAuthYandexSettings(BaseConfig):</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    client_id: str = Field(default="", env="YANDEX_CLIENT_ID")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    client_secret: str = Field(default="", env="YANDEX_CLIENT_SECRET", repr=False)</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    access_token_url: AnyUrl = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="https://oauth.yandex.ru/token",</span>
+<span class="line-precise" title="No Anys on this line!">        env="YANDEX_ACCESS_TOKEN_URL",</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    authorize_url: AnyUrl = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="https://oauth.yandex.ru/authorize",</span>
+<span class="line-precise" title="No Anys on this line!">        env="YANDEX_AUTHORIZE_URL",</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    user_info_url: AnyUrl = Field(</span>
+<span class="line-precise" title="No Anys on this line!">        default="https://login.yandex.ru/info",</span>
+<span class="line-precise" title="No Anys on this line!">        env="YANDEX_USER_INFO_URL",</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">logger_settings = LoggerSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">common_settings = CommonSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">postgre_settings = PostgreSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">redis_settings = RedisSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">jwt_settings = JWTSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">role_settings = RoleSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">jaeger_settings = JaegerSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">oauth_google_settings = OAuthGoogleSettings()</span>
+<span class="line-precise" title="Any Types on this line: 
+Omitted Generics (x2)
+Explicit (x1)">oauth_yandex_settings = OAuthYandexSettings()</span>
+</pre></td>
+</tr></tbody>
+</table>
+</body>
+</html>

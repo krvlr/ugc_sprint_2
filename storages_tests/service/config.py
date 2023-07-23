@@ -34,5 +34,5 @@ DATA_SELECTING_RESULT_FILE_NAME = "data_selecting_results.csv"
 DATA_INSERTING_RESULT_FILE_NAME = "data_inserting_results.csv"
 
 
-def generate_views(num: int) -> list[tuple[str, str, int], None, None]:
+def generate_views(num: int) -> list:
     return [(choice(user_ids), choice(movie_ids), randint(10_000, 30_000)) for _ in range(num)]

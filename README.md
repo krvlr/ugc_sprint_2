@@ -3,6 +3,8 @@
 
 https://github.com/krvlr/ugc_sprint_2
 
+[![Build status](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml)
+
 В рамках данного репозитория реализованы следующие сервисы:
 
 - Сервис авторизации

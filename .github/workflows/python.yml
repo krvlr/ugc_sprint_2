@@ -1,0 +1,55 @@
+name: Code checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10.12, 3.11.4]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: "x64"
+        env:
+          AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8-html
+          pip install mypy[reports]
+
+      - name: Lint with flake8
+        run: |
+          flake8 --config ./setup.cfg --count --show-source --statistics --format=html --htmldir=linter_reports/flake
+
+      - name: Lint with mypy
+        run: |
+          mypy . --config-file ./setup.cfg --install-types --non-interactive --html-report linter_reports/mypy
+
+  telegram_notifier:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [ linter ]
+    steps:
+      - name: Telegram notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            repository: ${{github.repository}}
+            ${{ github.actor }} created commit: ${{ github.event.commits[0].message }}
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}

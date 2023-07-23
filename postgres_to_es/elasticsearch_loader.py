@@ -1,10 +1,11 @@
 from http import HTTPStatus
 
-from decorators import backoff
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 from loguru import logger
 from pydantic import BaseModel
+
+from decorators import backoff
 from settings import ELASTIC_SEARCH_URL
 
 
@@ -33,5 +34,7 @@ class ElasticsearchLoader:
         if not self.client.indices.exists(index=index_name):
             self._create_index(index_name, index_params)
 
-        documents = [{"_index": index_name, "_id": row.id, "_source": row.dict()} for row in data]
+        documents = [
+            {"_index": index_name, "_id": getattr(row, "id"), "_source": row.dict()} for row in data
+        ]
         bulk(self.client, documents)
