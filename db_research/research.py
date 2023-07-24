@@ -15,4 +15,4 @@ if __name__ == "__main__":
     try:
         run_pg_mongo_tests()
     except Exception as ex:
-        print(f'Error {ex}')
+        print(f"Error {ex}")

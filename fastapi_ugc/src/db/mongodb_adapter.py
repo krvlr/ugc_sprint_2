@@ -25,6 +25,9 @@ class MongodbAdapter(DbAdapter):
     async def insert(self, collection: str, data: dict) -> None:
         await self.db[collection].insert_one(data)
 
+    async def update(self, collection: str, filters: dict, data: dict) -> None:
+        await self.db[collection].update_one(filters, {"$set": data}, upsert=True)
+
     async def delete(self, collection: str, filters: dict) -> None:
         await self.db[collection].find_one_and_delete(filters)
 
