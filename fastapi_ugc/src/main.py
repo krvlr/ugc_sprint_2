@@ -32,7 +32,7 @@ async def shutdown():
 
 app.include_router(core.router, prefix="/api/v1", tags=["core"])
 app.include_router(bookmarks.router, prefix="/api/v1/bookmarks", tags=["bookmarks"])
-app.include_router(ratings.router, prefix="/api/v1/ugc2/ratings", tags=["ratings"])
+app.include_router(ratings.router, prefix="/api/v1/ratings", tags=["ratings"])
 app.include_router(reviews.router, prefix="/api/v1/reviews", tags=["reviews"])
 
 if __name__ == "__main__":
