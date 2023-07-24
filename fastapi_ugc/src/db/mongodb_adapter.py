@@ -1,10 +1,13 @@
-from fastapi import Depends
-from motor.motor_asyncio import AsyncIOMotorClient
+import logging
 
 from core.config import mongodb_settings
 from db.base_db import DbAdapter
+from fastapi import Depends
+from motor.motor_asyncio import AsyncIOMotorClient
 
 client: AsyncIOMotorClient = None
+
+logger = logging.getLogger(__name__)
 
 
 def get_mongodb_client() -> AsyncIOMotorClient:
@@ -27,6 +30,16 @@ class MongodbAdapter(DbAdapter):
 
     async def delete(self, collection: str, filters: dict) -> None:
         await self.db[collection].find_one_and_delete(filters)
+
+    async def update_one(self, collection: str, filters: dict, data: dict) -> None:
+        await self.db[collection].update_one(filters, data)
+
+    async def count(self, collection: str, filters: dict) -> int | None:
+        return await self.db[collection].count_documents(filters)
+
+    async def avg(self, collection: str, pipeline: list | dict) -> float | None:
+        res = await self.db[collection].aggregate(pipeline).to_list(length=1)
+        return res[0]['avg_score']
 
 
 def get_mongodb_adapter(
