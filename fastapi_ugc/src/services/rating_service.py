@@ -2,11 +2,10 @@ import logging
 from datetime import datetime
 from functools import lru_cache
 
-from fastapi import Depends
-
 from core.config import mongodb_settings
 from db.base_db import DbAdapter
 from db.mongodb_adapter import get_mongodb_adapter
+from fastapi import Depends
 from models.rating import RatingModel, AvgRating, CountRating
 
 logger = logging.getLogger(__name__)
@@ -55,20 +54,15 @@ class RatingService:
         film_id: str,
         rating_score: int
     ) -> RatingModel:
-        rating = await self.db_adapter.find_one(
-            mongodb_settings.collection_rating, {"user_id": user_id, "film_id": film_id}
+        rating = RatingModel(user_id=user_id, film_id=film_id, rating_score=rating_score, created=datetime.now())
+        await self.db_adapter.update(
+            mongodb_settings.collection_rating,
+            {"user_id": user_id, "film_id": film_id},
+            rating.model_dump()
         )
-        if rating:
-            rating = RatingModel(user_id=user_id, film_id=film_id, rating_score=rating_score, created=datetime.now())
-            await self.db_adapter.update_one(
-                mongodb_settings.collection_rating, {"user_id": user_id, "film_id": film_id},
-                rating.model_dump()
-            )
-        else:
-            logger.info(f"Рейтинг не выставлен для user_id: {user_id}, film_id: {film_id}")
-            return RatingModel(**rating)
+        return rating
 
-    async def delete(self, user_id, film_id) -> None:
+    async def delete(self, user_id: str, film_id: str) -> None:
         rating = await self.db_adapter.find_one(
             mongodb_settings.collection_rating, {"user_id": user_id, "film_id": film_id}
         )

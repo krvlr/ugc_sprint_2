@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from models.common import Paginator
-from models.rating import RatingModel, CreateRatingModel, AvgRating, CountRating
+from models.rating import RatingModel, CreateRatingModel, AvgRating, CountRating, DeleteRatingModel
 from services.auth import JWTBearer
 from services.rating_service import RatingService, get_rating_service
 
@@ -26,22 +26,23 @@ async def rating_create(
     return await rating_service.create(user_id, create_rating_request.film_id, create_rating_request.rating_score)
 
 
-@router.get("/delete")
+@router.delete("/delete", response_model=DeleteRatingModel)
 async def rating_delete(
-    film_id: str,
+    delete_rating_request: DeleteRatingModel,
     user_id: str = Depends(JWTBearer()),
     rating_service: RatingService = Depends(get_rating_service),
-) -> None:
-    await rating_service.delete(user_id, film_id)
+) -> DeleteRatingModel:
+    await rating_service.delete(user_id, delete_rating_request.film_id)
+    return DeleteRatingModel(film_id=delete_rating_request.film_id)
 
 
-@router.post("/update", response_model=RatingModel)
+@router.put("/update", response_model=RatingModel)
 async def rating_update(
-    create_rating_request: CreateRatingModel,
+    update_rating: CreateRatingModel,
     user_id: str = Depends(JWTBearer()),
     rating_service: RatingService = Depends(get_rating_service),
 ) -> RatingModel:
-    return await rating_service.create(user_id, create_rating_request.film_id, create_rating_request.rating_score)
+    return await rating_service.update(user_id, update_rating.film_id, update_rating.rating_score)
 
 
 @router.get("/avg/{film_id}", response_model=AvgRating)

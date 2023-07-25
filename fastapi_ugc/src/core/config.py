@@ -13,14 +13,14 @@ class BaseSettings(BaseConfig):
 
 
 class MongodbSettings(BaseConfig):
-    host: str = Field(default="127.0.0.1", env="MONGODB_HOST")
-    port: int = Field(default=27019, env="MONGODB_PORT")
+    mongodb_host: str = Field(default="127.0.0.1", env="MONGODB_HOST")
+    mongodb_port: int = Field(default=27019, env="MONGODB_PORT")
     login: str = Field(default="default", env="MONGODB_LOGIN")
     password: str = Field(default="default_password", env="MONGODB_PASSWORD")
-    db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")
+    mongo_db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")
     collection_bookmark: str = Field(default="bookmark", env="MONGODB_COLLECTION_BOOKMARK")
+    collection_review: str = Field(default="review", env="MONGODB_COLLECTION_REVIEW")
     collection_rating: str = Field(default="rating", env="MONGODB_COLLECTION_RATING")
-    collection_review: str = Field(default="bookmark", env="MONGODB_COLLECTION_REVIEW")
 
 
 class LoggerSettings(BaseConfig):

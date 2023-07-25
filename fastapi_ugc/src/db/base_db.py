@@ -24,10 +24,6 @@ class DbAdapter(metaclass=ABCMeta):
         pass
 
     @abc.abstractmethod
-    async def update_one(self, collection: str, filters: dict, data: dict) -> None:
-        pass
-
-    @abc.abstractmethod
     async def count(self, collection: str, filters: dict) -> int | None:
         pass
 

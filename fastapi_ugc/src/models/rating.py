@@ -15,6 +15,10 @@ class CreateRatingModel(BaseModel):
     rating_score: int
 
 
+class DeleteRatingModel(BaseModel):
+    film_id: str
+
+
 class AvgRating(BaseModel):
     film_id: str
     avg_rating_score: float
@@ -23,8 +27,3 @@ class AvgRating(BaseModel):
 class CountRating(BaseModel):
     film_id: str
     count_rating_score: int
-
-#
-# @dataclass
-# class FilmFilters:
-#     genres_id: list[str] | None = Query(default=None)

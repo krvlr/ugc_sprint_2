@@ -14,7 +14,7 @@ def get_mongodb_client() -> AsyncIOMotorClient:
 class MongodbAdapter(DbAdapter):
     def __init__(self, data_provider: AsyncIOMotorClient):
         self.data_provider = data_provider
-        self.db = self.data_provider[mongodb_settings.db_name]
+        self.db = self.data_provider[mongodb_settings.mongo_db_name]
 
     async def find(self, collection: str, filters: dict, limit: int, offset: int) -> list[dict]:
         return [row async for row in self.db[collection].find(filters).skip(offset).limit(limit)]
@@ -30,9 +30,6 @@ class MongodbAdapter(DbAdapter):
 
     async def delete(self, collection: str, filters: dict) -> None:
         await self.db[collection].find_one_and_delete(filters)
-
-    async def update_one(self, collection: str, filters: dict, data: dict) -> None:
-        await self.db[collection].update_one(filters, data)
 
     async def count(self, collection: str, filters: dict) -> int | None:
         return await self.db[collection].count_documents(filters)
