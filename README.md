@@ -1,11 +1,26 @@
-# Проектная работа 8-го спринта
+# Проектная работа 9-го спринта
 ---
 
 https://github.com/krvlr/ugc_sprint_2
 
 [![Build status](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml)
 
-В рамках данного репозитория реализованы следующие сервисы:
+Исследование производительности Mongo vs Postgresql находится в db_research
+
+Реализован сервис выставления оценок фильмам, отзывов и закладок
+
+Реализованы следующие `endpoint`-ы:
+
+- `/api/v1/ugc2/ratings/` - оценки фильмов пользователя,
+- `/api/v1/ugc2/ratings/create` - поставить оценку фильму,
+- `/api/v1/ugc2/ratings/update` - обновить оценку,
+- `/api/v1/ugc2/ratings/delete` - удалить оценку,
+- `/api/v1/ugc2/ratings/count/{film_id}` - количество оценок у фильма,
+- `/api/v1/ugc2/ratings/avg/{film_id}` - средняя оценка у фильма,
+- `/api/v1/ugc2/bookmarks/` - закладки фильмов пользователя,
+- `/api/v1/ugc2/reviews/` - обзоры фильмов,
+
+В рамках данного репозитория также реализованы следующие сервисы:
 
 - Сервис авторизации
 - Сервис получения информации о фильмах
