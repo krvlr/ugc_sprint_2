@@ -59,4 +59,3 @@ async def count_rating(
     rating_service: RatingService = Depends(get_rating_service),
 ) -> CountRating:
     return await rating_service.get_count_of_ratings(film_id)
-
