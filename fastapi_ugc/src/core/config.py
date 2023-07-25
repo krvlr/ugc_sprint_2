@@ -19,6 +19,7 @@ class MongodbSettings(BaseConfig):
     password: str = Field(default="default_password", env="MONGODB_PASSWORD")
     db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")
     collection_bookmark: str = Field(default="bookmark", env="MONGODB_COLLECTION_BOOKMARK")
+    collection_review: str = Field(default="bookmark", env="MONGODB_COLLECTION_REVIEW")
 
 
 class LoggerSettings(BaseConfig):

@@ -62,7 +62,5 @@ class BookmarkService:
 
 
 @lru_cache()
-def get_bookmark_service(
-    db_adapter=Depends(get_mongodb_adapter),
-) -> BookmarkService:
+def get_bookmark_service(db_adapter=Depends(get_mongodb_adapter)) -> BookmarkService:
     return BookmarkService(db_adapter)

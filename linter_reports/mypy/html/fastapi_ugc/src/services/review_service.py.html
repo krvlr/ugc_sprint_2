@@ -4,9 +4,9 @@
 <link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
 </head>
 <body>
-<h2>src.services.bookmark_service</h2>
+<h2>src.services.review_service</h2>
 <table>
-<caption>fastapi_ugc\src\services\bookmark_service.py</caption>
+<caption>fastapi_ugc\src\services\review_service.py</caption>
 <tbody><tr>
 <td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
 <span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
@@ -78,88 +78,90 @@
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import logging</span>
 <span class="line-precise" title="No Anys on this line!">from datetime import datetime</span>
 <span class="line-precise" title="No Anys on this line!">from functools import lru_cache</span>
+<span class="line-precise" title="No Anys on this line!">from http import HTTPStatus</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import Depends</span>
+<span class="line-precise" title="No Anys on this line!">from fastapi import Depends, HTTPException</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from core.config import mongodb_settings</span>
 <span class="line-any" title="No Anys on this line!">from db.base_db import DbAdapter</span>
 <span class="line-any" title="No Anys on this line!">from db.mongodb_adapter import get_mongodb_adapter</span>
-<span class="line-any" title="No Anys on this line!">from models.bookmark import BookmarkModel</span>
+<span class="line-any" title="No Anys on this line!">from models.review import ReviewModel</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">class BookmarkService:</span>
+<span class="line-precise" title="No Anys on this line!">class ReviewService:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    def __init__(self, db_adapter: DbAdapter):</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)">        self.db_adapter = db_adapter</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def get_list(</span>
-<span class="line-empty" title="No Anys on this line!">        self,</span>
-<span class="line-empty" title="No Anys on this line!">        user_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">        offset: int,</span>
-<span class="line-empty" title="No Anys on this line!">        limit: int,</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; list[BookmarkModel]:</span>
+Unimported (x1)">    async def get_list(self, film_id: str, user_id: str, offset: int, limit: int) -&gt; list[ReviewModel]:</span>
+<span class="line-precise" title="No Anys on this line!">        if film_id:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark_list = await self.db_adapter.find(</span>
+Unimported (x4)">            review_list = await self.db_adapter.find(</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)">            mongodb_settings.collection_bookmark,</span>
-<span class="line-precise" title="No Anys on this line!">            {"user_id": user_id},</span>
-<span class="line-precise" title="No Anys on this line!">            limit=limit,</span>
-<span class="line-precise" title="No Anys on this line!">            offset=offset,</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x5)">        return [BookmarkModel(**bookmark) for bookmark in bookmark_list]</span>
-<span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def create(</span>
-<span class="line-empty" title="No Anys on this line!">        self,</span>
-<span class="line-empty" title="No Anys on this line!">        user_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">        film_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; BookmarkModel:</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark = await self.db_adapter.find_one(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x1)">        if bookmark:</span>
-<span class="line-precise" title="No Anys on this line!">            logger.info(f"Закладка уже существует для user_id: {user_id}, film_id: {film_id}")</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            return BookmarkModel(**bookmark)</span>
+Unimported (x2)">                mongodb_settings.collection_review, {"film_id": film_id}, limit, offset</span>
+<span class="line-empty" title="No Anys on this line!">            )</span>
 <span class="line-empty" title="No Anys on this line!">        else:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            bookmark = BookmarkModel(user_id=user_id, film_id=film_id, created=datetime.now())</span>
+Unimported (x4)">            review_list = await self.db_adapter.find(</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            await self.db_adapter.insert(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x5)">                mongodb_settings.collection_bookmark, bookmark.model_dump()</span>
+Unimported (x2)">                mongodb_settings.collection_review, {"user_id": user_id}, limit, offset</span>
 <span class="line-empty" title="No Anys on this line!">            )</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x1)">            return bookmark</span>
+Unimported (x5)">        return [ReviewModel(**review) for review in review_list]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unimported (x1)">    async def create(self, user_id: str, film_id: str, text: str) -&gt; ReviewModel:</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x2)">    async def delete(self, user_id, film_id) -&gt; None:</span>
+Unimported (x4)">        review = await self.db_adapter.find_one(</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark = await self.db_adapter.find_one(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Unannotated (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
+Unimported (x2)">            mongodb_settings.collection_review, {"user_id": user_id, "film_id": film_id}</span>
 <span class="line-empty" title="No Anys on this line!">        )</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x1)">        if not bookmark:</span>
+Unimported (x1)">        if review:</span>
+<span class="line-precise" title="No Anys on this line!">            logger.info(f"Закладка уже существует для user_id: {user_id}, film_id: {film_id}")</span>
+<span class="line-precise" title="Any Types on this line: 
+Explicit (x2)">            raise HTTPException(status_code=HTTPStatus.BAD_REQUEST)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x2)">            logger.info(f"Закладка не существует для user_id: {user_id}, film_id: {film_id}")</span>
+Unimported (x3)">        review = ReviewModel(user_id=user_id, film_id=film_id, text=text, created=datetime.now())</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x8)">        await self.db_adapter.insert(mongodb_settings.collection_review, review.model_dump())</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x1)">        return review</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unimported (x1)">    async def update(self, user_id: str, film_id: str, text: str) -&gt; ReviewModel:</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">        review = ReviewModel(user_id=user_id, film_id=film_id, text=text, created=datetime.now())</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">        await self.db_adapter.update(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">            mongodb_settings.collection_review,</span>
+<span class="line-precise" title="No Anys on this line!">            {"user_id": user_id, "film_id": film_id},</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">            review.model_dump(),</span>
+<span class="line-empty" title="No Anys on this line!">        )</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x1)">        return review</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">    async def delete(self, user_id: str, film_id: str) -&gt; None:</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x4)">        review = await self.db_adapter.find_one(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">            mongodb_settings.collection_review, {"user_id": user_id, "film_id": film_id}</span>
+<span class="line-empty" title="No Anys on this line!">        )</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x1)">        if not review:</span>
+<span class="line-precise" title="No Anys on this line!">            logger.info(f"Отзыва не существует для user_id: {user_id}, film_id: {film_id}")</span>
 <span class="line-empty" title="No Anys on this line!">            return</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">        await self.db_adapter.delete(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Unannotated (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
+Unimported (x5)">        await self.db_adapter.delete(mongodb_settings.collection_review, {"user_id": user_id, "film_id": film_id})</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="Any Types on this line: 
@@ -168,10 +170,10 @@ Explicit (x6)">@lru_cache()</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x1)
 Explicit (x5)
-Unimported (x1)">def get_bookmark_service(db_adapter=Depends(get_mongodb_adapter)) -&gt; BookmarkService:</span>
+Unimported (x1)">def get_review_service(db_adapter=Depends(get_mongodb_adapter)) -&gt; ReviewService:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)
-Unannotated (x1)">    return BookmarkService(db_adapter)</span>
+Unannotated (x1)">    return ReviewService(db_adapter)</span>
 </pre></td>
 </tr></tbody>
 </table>
