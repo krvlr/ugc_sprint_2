@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
+<link rel="stylesheet" type="text/css" href="../../../mypy-html.css">
 </head>
 <body>
-<h2>src.services.bookmark_service</h2>
+<h2>db_research.service.config</h2>
 <table>
-<caption>fastapi_ugc\src\services\bookmark_service.py</caption>
+<caption>db_research\service\config.py</caption>
 <tbody><tr>
 <td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
 <span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
@@ -74,104 +74,97 @@
 <span id="L64" class="lineno"><a class="lineno" href="#L64">64</a></span>
 <span id="L65" class="lineno"><a class="lineno" href="#L65">65</a></span>
 <span id="L66" class="lineno"><a class="lineno" href="#L66">66</a></span>
+<span id="L67" class="lineno"><a class="lineno" href="#L67">67</a></span>
+<span id="L68" class="lineno"><a class="lineno" href="#L68">68</a></span>
+<span id="L69" class="lineno"><a class="lineno" href="#L69">69</a></span>
+<span id="L70" class="lineno"><a class="lineno" href="#L70">70</a></span>
+<span id="L71" class="lineno"><a class="lineno" href="#L71">71</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import logging</span>
-<span class="line-precise" title="No Anys on this line!">from datetime import datetime</span>
-<span class="line-precise" title="No Anys on this line!">from functools import lru_cache</span>
+<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import time</span>
+<span class="line-precise" title="No Anys on this line!">from functools import wraps</span>
+<span class="line-precise" title="No Anys on this line!">from uuid import uuid4</span>
+<span class="line-precise" title="No Anys on this line!">from pydantic import Field</span>
+<span class="line-precise" title="No Anys on this line!">from pydantic import BaseSettings</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import Depends</span>
+<span class="line-precise" title="No Anys on this line!">REPEAT_TEST_COUNT = 5</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-any" title="No Anys on this line!">from core.config import mongodb_settings</span>
-<span class="line-any" title="No Anys on this line!">from db.base_db import DbAdapter</span>
-<span class="line-any" title="No Anys on this line!">from db.mongodb_adapter import get_mongodb_adapter</span>
-<span class="line-any" title="No Anys on this line!">from models.bookmark import BookmarkModel</span>
+<span class="line-precise" title="No Anys on this line!">USERS_COUNT = 100000</span>
+<span class="line-precise" title="No Anys on this line!">MOVIES_COUNT = 1000</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
+<span class="line-precise" title="No Anys on this line!">INIT_RECORDS_ALL = 1000000</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">INIT_RECORDS_CHUNK = 10000</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">COUNT_OF_SELECTS = 1000</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">COUNT_OF_INSERTS = 15</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">user_ids = [str(uuid4()) for _ in range(USERS_COUNT)]</span>
+<span class="line-precise" title="No Anys on this line!">movie_ids = [str(uuid4()) for _ in range(MOVIES_COUNT)]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">class BookmarkService:</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x1)">    def __init__(self, db_adapter: DbAdapter):</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)">        self.db_adapter = db_adapter</span>
+<span class="line-precise" title="No Anys on this line!">CHUNKS = [</span>
+<span class="line-precise" title="No Anys on this line!">    100,</span>
+<span class="line-precise" title="No Anys on this line!">    200,</span>
+<span class="line-precise" title="No Anys on this line!">    500,</span>
+<span class="line-precise" title="No Anys on this line!">    1000,</span>
+<span class="line-precise" title="No Anys on this line!">    2000,</span>
+<span class="line-precise" title="No Anys on this line!">    4000,</span>
+<span class="line-precise" title="No Anys on this line!">    5000,</span>
+<span class="line-precise" title="No Anys on this line!">    6000,</span>
+<span class="line-precise" title="No Anys on this line!">    8000,</span>
+<span class="line-precise" title="No Anys on this line!">    10_000,</span>
+<span class="line-precise" title="No Anys on this line!">    100_000,</span>
+<span class="line-precise" title="No Anys on this line!">    200_000,</span>
+<span class="line-precise" title="No Anys on this line!">    500_000,</span>
+<span class="line-precise" title="No Anys on this line!">    1_000_000,</span>
+<span class="line-empty" title="No Anys on this line!">]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def get_list(</span>
-<span class="line-empty" title="No Anys on this line!">        self,</span>
-<span class="line-empty" title="No Anys on this line!">        user_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">        offset: int,</span>
-<span class="line-empty" title="No Anys on this line!">        limit: int,</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; list[BookmarkModel]:</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark_list = await self.db_adapter.find(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)">            mongodb_settings.collection_bookmark,</span>
-<span class="line-precise" title="No Anys on this line!">            {"user_id": user_id},</span>
-<span class="line-precise" title="No Anys on this line!">            limit=limit,</span>
-<span class="line-precise" title="No Anys on this line!">            offset=offset,</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x5)">        return [BookmarkModel(**bookmark) for bookmark in bookmark_list]</span>
+<span class="line-precise" title="No Anys on this line!">SELECTING_RESULT_FILE_NAME = "selecting_results.csv"</span>
+<span class="line-precise" title="No Anys on this line!">INSERTING_RESULT_FILE_NAME = "inserting_results.csv"</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def create(</span>
-<span class="line-empty" title="No Anys on this line!">        self,</span>
-<span class="line-empty" title="No Anys on this line!">        user_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">        film_id: str,</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; BookmarkModel:</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">def timeit(func):</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark = await self.db_adapter.find_one(</span>
+Unannotated (x2)">    @wraps(func)</span>
+<span class="line-any" title="No Anys on this line!">    def timeit_wrapper(*args, **kwargs):</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
+Unannotated (x2)">        start_time = time.perf_counter()</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x1)">        if bookmark:</span>
-<span class="line-precise" title="No Anys on this line!">            logger.info(f"Закладка уже существует для user_id: {user_id}, film_id: {film_id}")</span>
+Unannotated (x5)">        result = func(*args, **kwargs)</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            return BookmarkModel(**bookmark)</span>
-<span class="line-empty" title="No Anys on this line!">        else:</span>
+Unannotated (x2)">        end_time = time.perf_counter()</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            bookmark = BookmarkModel(user_id=user_id, film_id=film_id, created=datetime.now())</span>
+Unannotated (x4)">        total_time = end_time - start_time</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            await self.db_adapter.insert(</span>
+Unannotated (x16)">        print(f"Function {func.__name__}{args} {kwargs} Took {total_time:.4f} seconds")</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x5)">                mongodb_settings.collection_bookmark, bookmark.model_dump()</span>
-<span class="line-empty" title="No Anys on this line!">            )</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x1)">            return bookmark</span>
+Unannotated (x1)">        return result</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x2)">    async def delete(self, user_id, film_id) -&gt; None:</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        bookmark = await self.db_adapter.find_one(</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Unannotated (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x1)">        if not bookmark:</span>
-<span class="line-any" title="Any Types on this line: 
-Unannotated (x2)">            logger.info(f"Закладка не существует для user_id: {user_id}, film_id: {film_id}")</span>
-<span class="line-empty" title="No Anys on this line!">            return</span>
+Unannotated (x1)">    return timeit_wrapper</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">class PerformanceSettings(BaseSettings):</span>
+<span class="line-empty" title="No Anys on this line!">    """Общие настройки"""</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">        await self.db_adapter.delete(</span>
+Explicit (x6)">    dbname: str = Field(default="postgres", env="POSTGRES_NAME")</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Unannotated (x2)">            mongodb_settings.collection_bookmark, {"user_id": user_id, "film_id": film_id}</span>
-<span class="line-empty" title="No Anys on this line!">        )</span>
+Explicit (x6)">    username: str = Field(default="postgres", env="POSTGRES_USER")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    password: str = Field(default="postgres", env="POSTGRES_PASSWORD")</span>
+<span class="line-any" title="Any Types on this line: 
+Explicit (x6)">    host: str = Field(default="localhost", env="POSTGRES_HOST")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-precise" title="No Anys on this line!">    class Config:</span>
+<span class="line-precise" title="No Anys on this line!">        env_file = ".env"</span>
+<span class="line-precise" title="No Anys on this line!">        env_file_encoding = "utf-8"</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x6)
-Explicit (x6)">@lru_cache()</span>
-<span class="line-any" title="Any Types on this line: 
-Unannotated (x1)
-Explicit (x5)
-Unimported (x1)">def get_bookmark_service(db_adapter=Depends(get_mongodb_adapter)) -&gt; BookmarkService:</span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x1)
-Unannotated (x1)">    return BookmarkService(db_adapter)</span>
+Omitted Generics (x2)
+Explicit (x1)">perf_settings = PerformanceSettings()</span>
 </pre></td>
 </tr></tbody>
 </table>

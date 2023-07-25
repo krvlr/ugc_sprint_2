@@ -116,6 +116,8 @@ Cервис авторизации предоставляет возможнос
     MONGODB_LOGIN
     MONGODB_PASSWORD
     MONGODB_DB_NAME
+    MONGODB_COLLECTION_BOOKMARK
+    MONGODB_COLLECTION_REVIEW
 
 Теперь можно запустить сборку образа и запуск контейнеров:
 

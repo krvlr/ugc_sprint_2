@@ -1,13 +1,10 @@
-import logging
-
-from core.config import mongodb_settings
-from db.base_db import DbAdapter
 from fastapi import Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 
-client: AsyncIOMotorClient = None
+from core.config import mongodb_settings
+from db.base_db import DbAdapter
 
-logger = logging.getLogger(__name__)
+client: AsyncIOMotorClient = None
 
 
 def get_mongodb_client() -> AsyncIOMotorClient:
@@ -27,6 +24,9 @@ class MongodbAdapter(DbAdapter):
 
     async def insert(self, collection: str, data: dict) -> None:
         await self.db[collection].insert_one(data)
+
+    async def update(self, collection: str, filters: dict, data: dict) -> None:
+        await self.db[collection].update_one(filters, {"$set": data}, upsert=True)
 
     async def delete(self, collection: str, filters: dict) -> None:
         await self.db[collection].find_one_and_delete(filters)

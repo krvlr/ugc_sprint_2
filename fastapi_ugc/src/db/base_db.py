@@ -16,6 +16,10 @@ class DbAdapter(metaclass=ABCMeta):
         pass
 
     @abc.abstractmethod
+    async def update(self, collection: str, filters: dict, data: dict) -> None:
+        pass
+
+    @abc.abstractmethod
     async def delete(self, collection: str, filters: dict) -> None:
         pass
 
