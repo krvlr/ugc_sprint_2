@@ -22,3 +22,11 @@ class DbAdapter(metaclass=ABCMeta):
     @abc.abstractmethod
     async def delete(self, collection: str, filters: dict) -> None:
         pass
+
+    @abc.abstractmethod
+    async def count(self, collection: str, filters: dict) -> int | None:
+        pass
+
+    @abc.abstractmethod
+    async def avg(self, collection: str, pipeline: list | dict) -> float | None:
+        pass

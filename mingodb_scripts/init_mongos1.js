@@ -11,7 +11,7 @@ rating_collection = "rating";
 database.createCollection(rating_collection);
 sh.shardCollection(`${dbname}.${rating_collection}`, {["user_id"]: "hashed"});
 database[rating_collection].createIndex({["film_id"]: -1});
-database[rating_collection].createIndex({["score"]: -1});
+database[rating_collection].createIndex({["rating_score"]: -1});
 
 reviews_collection = "review";
 database.createCollection(reviews_collection);

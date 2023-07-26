@@ -1,11 +1,37 @@
-# Проектная работа 8-го спринта
+# Проектная работа 9-го спринта
 ---
 
 https://github.com/krvlr/ugc_sprint_2
 
 [![Build status](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml)
 
-В рамках данного репозитория реализованы следующие сервисы:
+Для запуска запустить сборку:
+
+    docker compose up -d
+
+Запустить скрипты настройки Mongo в mingodb_scripts (MAKEFILE либо init_mongo.bat)
+
+Исследование производительности Mongo vs Postgresql находится в db_research
+
+Реализован сервис выставления оценок фильмам, отзывов и закладок
+
+Реализованы следующие `endpoint`-ы:
+
+- `/api/v1/ugc2/ratings/` - оценки фильмов пользователя,
+- `/api/v1/ugc2/ratings/create` - поставить оценку фильму,
+- `/api/v1/ugc2/ratings/update` - обновить оценку,
+- `/api/v1/ugc2/ratings/delete?film_id=<film_id>` - удалить оценку фильма,
+- `/api/v1/ugc2/ratings/count/<film_id>` - количество оценок у фильма,
+- `/api/v1/ugc2/ratings/avg/<film_id>` - средняя оценка у фильма,
+- `/api/v1/ugc2/bookmarks/` - закладки фильмов пользователя,
+- `/api/v1/ugc2/bookmarks/create` - создать закладку фильма,
+- `/api/v1/ugc2/bookmarks/delete?film_id=<film_id>` - удалить закладку фильма,
+- `/api/v1/ugc2/reviews/` - обзоры фильмов,
+- `/api/v1/ugc2/reviews/create` - создать обзор фильма,
+- `/api/v1/ugc2/reviews/update` - обновить обзор,
+- `/api/v1/ugc2/reviews/delete?film_id=<film_id>` - удалить обзор фильма,
+
+В рамках данного репозитория также реализованы следующие сервисы:
 
 - Сервис авторизации
 - Сервис получения информации о фильмах
@@ -118,6 +144,7 @@ Cервис авторизации предоставляет возможнос
     MONGODB_DB_NAME
     MONGODB_COLLECTION_BOOKMARK
     MONGODB_COLLECTION_REVIEW
+    MONGODB_COLLECTION_RATING
 
 Теперь можно запустить сборку образа и запуск контейнеров:
 
