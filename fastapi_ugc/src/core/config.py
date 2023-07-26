@@ -13,8 +13,8 @@ class BaseSettings(BaseConfig):
 
 
 class MongodbSettings(BaseConfig):
-    mongodb_host: str = Field(default="127.0.0.1", env="MONGODB_HOST")
-    mongodb_port: int = Field(default=27019, env="MONGODB_PORT")
+    mongodb_host: str = Field(default="mongos1", env="MONGODB_HOST")
+    mongodb_port: int = Field(default=27017, env="MONGODB_PORT")
     login: str = Field(default="default", env="MONGODB_LOGIN")
     password: str = Field(default="default_password", env="MONGODB_PASSWORD")
     mongo_db_name: str = Field(default="ugc2", env="MONGODB_DB_NAME")

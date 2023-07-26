@@ -5,6 +5,12 @@ https://github.com/krvlr/ugc_sprint_2
 
 [![Build status](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/krvlr/ugc_sprint_2/actions/workflows/python.yml)
 
+Для запуска запустить сборку:
+
+    docker compose up -d
+
+Запустить скрипты настройки Mongo в mingodb_scripts (MAKEFILE либо init_mongo.bat)
+
 Исследование производительности Mongo vs Postgresql находится в db_research
 
 Реализован сервис выставления оценок фильмам, отзывов и закладок
@@ -138,6 +144,7 @@ Cервис авторизации предоставляет возможнос
     MONGODB_DB_NAME
     MONGODB_COLLECTION_BOOKMARK
     MONGODB_COLLECTION_REVIEW
+    MONGODB_COLLECTION_RATING
 
 Теперь можно запустить сборку образа и запуск контейнеров:
 
