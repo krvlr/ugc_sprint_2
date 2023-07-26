@@ -15,10 +15,6 @@ class CreateRatingModel(BaseModel):
     rating_score: int
 
 
-class DeleteRatingModel(BaseModel):
-    film_id: str
-
-
 class AvgRating(BaseModel):
     film_id: str
     avg_rating_score: float

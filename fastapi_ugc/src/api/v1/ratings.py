@@ -26,14 +26,13 @@ async def rating_create(
     return await rating_service.create(user_id, create_rating_request.film_id, create_rating_request.rating_score)
 
 
-@router.delete("/delete", response_model=DeleteRatingModel)
+@router.delete("/delete")
 async def rating_delete(
-    delete_rating_request: DeleteRatingModel,
+    film_id: str,
     user_id: str = Depends(JWTBearer()),
     rating_service: RatingService = Depends(get_rating_service),
-) -> DeleteRatingModel:
-    await rating_service.delete(user_id, delete_rating_request.film_id)
-    return DeleteRatingModel(film_id=delete_rating_request.film_id)
+) -> None:
+    await rating_service.delete(user_id, film_id)
 
 
 @router.put("/update", response_model=RatingModel)

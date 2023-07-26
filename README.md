@@ -14,11 +14,16 @@ https://github.com/krvlr/ugc_sprint_2
 - `/api/v1/ugc2/ratings/` - оценки фильмов пользователя,
 - `/api/v1/ugc2/ratings/create` - поставить оценку фильму,
 - `/api/v1/ugc2/ratings/update` - обновить оценку,
-- `/api/v1/ugc2/ratings/delete` - удалить оценку,
-- `/api/v1/ugc2/ratings/count/{film_id}` - количество оценок у фильма,
-- `/api/v1/ugc2/ratings/avg/{film_id}` - средняя оценка у фильма,
+- `/api/v1/ugc2/ratings/delete?film_id=<film_id>` - удалить оценку фильма,
+- `/api/v1/ugc2/ratings/count/<film_id>` - количество оценок у фильма,
+- `/api/v1/ugc2/ratings/avg/<film_id>` - средняя оценка у фильма,
 - `/api/v1/ugc2/bookmarks/` - закладки фильмов пользователя,
+- `/api/v1/ugc2/bookmarks/create` - создать закладку фильма,
+- `/api/v1/ugc2/bookmarks/delete?film_id=<film_id>` - удалить закладку фильма,
 - `/api/v1/ugc2/reviews/` - обзоры фильмов,
+- `/api/v1/ugc2/reviews/create` - создать обзор фильма,
+- `/api/v1/ugc2/reviews/update` - обновить обзор,
+- `/api/v1/ugc2/reviews/delete?film_id=<film_id>` - удалить обзор фильма,
 
 В рамках данного репозитория также реализованы следующие сервисы:
 
