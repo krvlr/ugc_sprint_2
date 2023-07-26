@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from models.common import Paginator
-from models.rating import RatingModel, CreateRatingModel, AvgRating, CountRating, DeleteRatingModel
+from models.rating import RatingModel, CreateRatingModel, AvgRating, CountRating
 from services.auth import JWTBearer
 from services.rating_service import RatingService, get_rating_service
 
