@@ -10,6 +10,9 @@ class BaseConfig(BaseSettings):
 class BaseSettings(BaseConfig):
     project_name: str = Field(default="UGC2", env="PROJECT_NAME")
     secret_key: str = Field(default="SUPER-SECRET-KEY", repr=False, env="JWT_SECRET_KEY")
+    sentry_dsn: str = Field(default="123", env="SENTRY_DSN")
+    logstash_host: str = Field(default="logstashelk", env="LOGSTASH_HOST")
+    logstash_port: int = Field(default=5044, env="LOGSTASH_PORT")
 
 
 class MongodbSettings(BaseConfig):
