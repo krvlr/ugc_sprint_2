@@ -1,0 +1,21 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  tags: [ 'nginx' ]
+  paths:
+    - /var/log/nginx/*
+  json:
+    keys_under_root: true
+    add_error_key: true
+- type: log
+  enabled: true
+  tags: [ 'fastapi_ugc' ]
+  paths:
+    - /src/logs/fastapi_ugc.*
+  json:
+    keys_under_root: true
+    add_error_key: true
+
+output.logstash:
+  enabled: true
+  hosts: ["logstashelk:5045"]
