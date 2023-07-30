@@ -36,9 +36,9 @@ LOGGING_CONFIG = {
         },
     },
     'loggers': {
-        '': {'handlers': LOG_DEFAULT_HANDLERS, 'level': 'INFO',},
-        'uvicorn.error': {'level': 'INFO',},
-        'uvicorn.access': {'handlers': ['access'], 'level': 'INFO', 'propagate': False,},
+        '': {'handlers': LOG_DEFAULT_HANDLERS, 'level': 'INFO', },
+        'uvicorn.error': {'level': 'INFO', },
+        'uvicorn.access': {'handlers': ['access'], 'level': 'INFO', 'propagate': False, },
     },
-    'root': {'level': 'INFO', 'formatter': 'verbose', 'handlers': LOG_DEFAULT_HANDLERS,},
+    'root': {'level': 'INFO', 'formatter': 'verbose', 'handlers': LOG_DEFAULT_HANDLERS, },
 }
