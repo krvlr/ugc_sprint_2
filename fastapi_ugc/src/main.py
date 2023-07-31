@@ -32,10 +32,7 @@ if base_settings.sentry_dsn:
 
 @app.middleware("http")
 async def log_middle(request: Request, call_next):
-    if 'X-Request-Id' in request.headers:
-        request_id = request.headers['X-Request-Id']
-    else:
-        request_id = None
+    request_id = request.headers.get("X-Request-Id")
     add_log_request_id(request_id)
     response = await call_next(request)
     return response

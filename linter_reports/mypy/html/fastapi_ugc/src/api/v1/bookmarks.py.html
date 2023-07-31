@@ -44,67 +44,56 @@
 <span id="L34" class="lineno"><a class="lineno" href="#L34">34</a></span>
 <span id="L35" class="lineno"><a class="lineno" href="#L35">35</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from fastapi import APIRouter, Depends</span>
+<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from fastapi import APIRouter, Depends</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from models.bookmark import BookmarkModel, CreateBookmarkModel</span>
 <span class="line-any" title="No Anys on this line!">from models.common import Paginator</span>
 <span class="line-any" title="No Anys on this line!">from services.auth import JWTBearer</span>
 <span class="line-any" title="No Anys on this line!">from services.bookmark_service import BookmarkService, get_bookmark_service</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x4)">router = APIRouter()</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">router = APIRouter()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x10)
-Unimported (x4)">@router.get("/", response_model=list[BookmarkModel])</span>
+Unimported (x7)
+Omitted Generics (x6)">@router.get("/", response_model=list[BookmarkModel])</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">async def bookmark_list(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x2)">    user_id: str = Depends(JWTBearer()),</span>
+Unimported (x4)">    user_id: str = Depends(JWTBearer()),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    paginator: Paginator = Depends(Paginator),</span>
+Unimported (x3)">    paginator: Paginator = Depends(Paginator),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
+Unimported (x3)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; list[BookmarkModel]:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x7)">    return await bookmark_service.get_list(user_id, paginator.offset, paginator.limit)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x4)
-Unimported (x1)">@router.post("/create", response_model=BookmarkModel)</span>
+Unimported (x4)">@router.post("/create", response_model=BookmarkModel)</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">async def bookmark_create(</span>
 <span class="line-empty" title="No Anys on this line!">    create_bookmark_request: CreateBookmarkModel,</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x2)">    user_id: str = Depends(JWTBearer()),</span>
+Unimported (x4)">    user_id: str = Depends(JWTBearer()),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
+Unimported (x3)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; BookmarkModel:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x5)">    return await bookmark_service.create(user_id, create_bookmark_request.film_id)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x4)">@router.get("/delete")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">@router.get("/delete")</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">async def bookmark_delete(</span>
 <span class="line-empty" title="No Anys on this line!">    film_id: str,</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x2)">    user_id: str = Depends(JWTBearer()),</span>
+Unimported (x4)">    user_id: str = Depends(JWTBearer()),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
+Unimported (x3)">    bookmark_service: BookmarkService = Depends(get_bookmark_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; None:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">    await bookmark_service.delete(user_id, film_id)</span>

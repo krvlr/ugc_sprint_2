@@ -40,12 +40,12 @@
 <span id="L30" class="lineno"><a class="lineno" href="#L30">30</a></span>
 </pre></td>
 <td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from flask import Flask</span>
-<span class="line-precise" title="No Anys on this line!">from opentelemetry import trace</span>
-<span class="line-precise" title="No Anys on this line!">from opentelemetry.exporter.jaeger.thrift import JaegerExporter</span>
+<span class="line-any" title="No Anys on this line!">from opentelemetry import trace</span>
+<span class="line-any" title="No Anys on this line!">from opentelemetry.exporter.jaeger.thrift import JaegerExporter</span>
 <span class="line-any" title="No Anys on this line!">from opentelemetry.instrumentation.flask import FlaskInstrumentor</span>
-<span class="line-precise" title="No Anys on this line!">from opentelemetry.sdk.resources import SERVICE_NAME, Resource</span>
-<span class="line-precise" title="No Anys on this line!">from opentelemetry.sdk.trace import TracerProvider</span>
-<span class="line-precise" title="No Anys on this line!">from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter</span>
+<span class="line-any" title="No Anys on this line!">from opentelemetry.sdk.resources import SERVICE_NAME, Resource</span>
+<span class="line-any" title="No Anys on this line!">from opentelemetry.sdk.trace import TracerProvider</span>
+<span class="line-any" title="No Anys on this line!">from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from core.config import jaeger_settings</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -56,13 +56,17 @@ Unimported (x1)">def configure_jaeger_tracer(app: Flask, host: str, port: int) -
 Unimported (x2)">    if not jaeger_settings.enable_tracer:</span>
 <span class="line-empty" title="No Anys on this line!">        return</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">    trace.set_tracer_provider(</span>
-<span class="line-precise" title="No Anys on this line!">        TracerProvider(resource=Resource.create({SERVICE_NAME: "Flask Auth"}))</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">    trace.set_tracer_provider(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x6)">        TracerProvider(resource=Resource.create({SERVICE_NAME: "Flask Auth"}))</span>
 <span class="line-empty" title="No Anys on this line!">    )</span>
 <span class="line-any" title="Any Types on this line: 
-Error (x2)">    trace.get_tracer_provider().add_span_processor(  # type: ignore</span>
-<span class="line-precise" title="No Anys on this line!">        BatchSpanProcessor(</span>
-<span class="line-precise" title="No Anys on this line!">            JaegerExporter(</span>
+Unimported (x5)">    trace.get_tracer_provider().add_span_processor(  # type: ignore</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        BatchSpanProcessor(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">            JaegerExporter(</span>
 <span class="line-precise" title="No Anys on this line!">                agent_host_name=host,</span>
 <span class="line-precise" title="No Anys on this line!">                agent_port=port,</span>
 <span class="line-empty" title="No Anys on this line!">            )</span>
@@ -70,8 +74,7 @@ Error (x2)">    trace.get_tracer_provider().add_span_processor(  # type: ignore<
 <span class="line-empty" title="No Anys on this line!">    )</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Error (x2)
-Omitted Generics (x1)">    trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))  # type: ignore</span>
+Unimported (x9)">    trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))  # type: ignore</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x5)">    FlaskInstrumentor().instrument_app(app)</span>

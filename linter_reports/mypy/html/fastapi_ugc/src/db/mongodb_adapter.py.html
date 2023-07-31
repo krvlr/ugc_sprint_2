@@ -46,8 +46,15 @@
 <span id="L36" class="lineno"><a class="lineno" href="#L36">36</a></span>
 <span id="L37" class="lineno"><a class="lineno" href="#L37">37</a></span>
 <span id="L38" class="lineno"><a class="lineno" href="#L38">38</a></span>
+<span id="L39" class="lineno"><a class="lineno" href="#L39">39</a></span>
+<span id="L40" class="lineno"><a class="lineno" href="#L40">40</a></span>
+<span id="L41" class="lineno"><a class="lineno" href="#L41">41</a></span>
+<span id="L42" class="lineno"><a class="lineno" href="#L42">42</a></span>
+<span id="L43" class="lineno"><a class="lineno" href="#L43">43</a></span>
+<span id="L44" class="lineno"><a class="lineno" href="#L44">44</a></span>
+<span id="L45" class="lineno"><a class="lineno" href="#L45">45</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from fastapi import Depends</span>
+<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from fastapi import Depends</span>
 <span class="line-any" title="No Anys on this line!">from motor.motor_asyncio import AsyncIOMotorClient</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from core.config import mongodb_settings</span>
@@ -69,7 +76,7 @@ Unimported (x1)">    def __init__(self, data_provider: AsyncIOMotorClient):</spa
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)">        self.data_provider = data_provider</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x5)">        self.db = self.data_provider[mongodb_settings.db_name]</span>
+Unimported (x5)">        self.db = self.data_provider[mongodb_settings.mongo_db_name]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-imprecise" title="Any Types on this line: 
 Omitted Generics (x4)">    async def find(self, collection: str, filters: dict, limit: int, offset: int) -&gt; list[dict]:</span>
@@ -101,12 +108,25 @@ Omitted Generics (x2)">    async def delete(self, collection: str, filters: dict
 Unimported (x4)
 Omitted Generics (x2)">        await self.db[collection].find_one_and_delete(filters)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x2)">    async def count(self, collection: str, filters: dict) -&gt; int | None:</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x4)
+Omitted Generics (x2)">        return await self.db[collection].count_documents(filters)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x3)">    async def avg(self, collection: str, pipeline: list | dict) -&gt; float | None:</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x7)
+Omitted Generics (x3)">        res = await self.db[collection].aggregate(pipeline).to_list(length=1)</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">        return res[0]["avg_score"]</span>
+<span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x1)">def get_mongodb_adapter(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    data_provider=Depends(get_mongodb_client),</span>
+Unimported (x3)">    data_provider=Depends(get_mongodb_client),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; MongodbAdapter:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)

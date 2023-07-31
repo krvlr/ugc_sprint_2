@@ -36,25 +36,23 @@
 <span class="line-any" title="No Anys on this line!">from core.config import kafka_settings</span>
 <span class="line-any" title="No Anys on this line!">from models.film import FilmProgress</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import APIRouter, Depends</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import APIRouter, Depends</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x4)">router = APIRouter()</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">router = APIRouter()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x4)">@router.put("/register_progress")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">@router.put("/register_progress")</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)
 Unannotated (x1)">async def register_film_timestamp(</span>
 <span class="line-empty" title="No Anys on this line!">    film_progress: FilmProgress,</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    queue_provider: KafkaQueueProvider = Depends(get_kafka_queue_provider),</span>
+Unimported (x3)">    queue_provider: KafkaQueueProvider = Depends(get_kafka_queue_provider),</span>
 <span class="line-empty" title="No Anys on this line!">):</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x4)">    event = film_progress.dict()</span>

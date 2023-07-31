@@ -36,7 +36,7 @@ class MongodbAdapter(DbAdapter):
 
     async def avg(self, collection: str, pipeline: list | dict) -> float | None:
         res = await self.db[collection].aggregate(pipeline).to_list(length=1)
-        return res[0]['avg_score']
+        return res[0]["avg_score"]
 
 
 def get_mongodb_adapter(

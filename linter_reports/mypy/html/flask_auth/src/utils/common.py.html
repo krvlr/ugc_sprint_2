@@ -55,35 +55,35 @@
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from flask import abort, current_app, jsonify, request</span>
 <span class="line-any" title="No Anys on this line!">from flask_jwt_extended import get_jwt</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel, ValidationError</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel, ValidationError</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x1)">def get_data_from_body(request_model: Type[BaseModel]) -&gt; Any:</span>
 <span class="line-empty" title="No Anys on this line!">    try:</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
+Error (x2)
 Unimported (x3)">        return request_model.parse_obj(request.get_json())</span>
-<span class="line-precise" title="No Anys on this line!">    except ValidationError as err:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        current_app.logger.error(f"{err.__class__.__name__}: {err}")</span>
+Unimported (x2)">    except ValidationError as err:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Explicit (x2)">        abort(HTTPStatus.UNPROCESSABLE_ENTITY, description=err.errors())</span>
+Unimported (x8)">        current_app.logger.error(f"{err.__class__.__name__}: {err}")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x5)">        abort(HTTPStatus.UNPROCESSABLE_ENTITY, description=err.errors())</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
 Explicit (x1)">def get_data_from_params(request_model: Type[BaseModel]) -&gt; Any:</span>
 <span class="line-empty" title="No Anys on this line!">    try:</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
+Error (x2)
 Unimported (x4)">        return request_model.parse_obj(request.args.to_dict())</span>
-<span class="line-precise" title="No Anys on this line!">    except ValidationError as err:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x4)">        current_app.logger.error(f"{err.__class__.__name__}: {err}")</span>
+Unimported (x2)">    except ValidationError as err:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)
-Explicit (x2)">        abort(HTTPStatus.UNPROCESSABLE_ENTITY, description=err.errors())</span>
+Unimported (x8)">        current_app.logger.error(f"{err.__class__.__name__}: {err}")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x5)">        abort(HTTPStatus.UNPROCESSABLE_ENTITY, description=err.errors())</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 

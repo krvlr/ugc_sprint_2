@@ -10,3 +10,4 @@
 **/.md
 **/venv
 **/env
+**/.mypy_cache

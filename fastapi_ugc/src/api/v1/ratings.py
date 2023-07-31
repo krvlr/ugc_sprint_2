@@ -23,7 +23,9 @@ async def rating_create(
     user_id: str = Depends(JWTBearer()),
     rating_service: RatingService = Depends(get_rating_service),
 ) -> RatingModel:
-    return await rating_service.create(user_id, create_rating_request.film_id, create_rating_request.rating_score)
+    return await rating_service.create(
+        user_id, create_rating_request.film_id, create_rating_request.rating_score
+    )
 
 
 @router.delete("/delete")

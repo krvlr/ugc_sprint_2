@@ -77,31 +77,30 @@
 <span class="line-empty" title="No Anys on this line!">)</span>
 <span class="line-any" title="No Anys on this line!">from core.logger import LOGGER_CONFIG</span>
 <span class="line-any" title="No Anys on this line!">from elasticsearch import AsyncElasticsearch</span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import FastAPI</span>
-<span class="line-precise" title="No Anys on this line!">from fastapi.responses import ORJSONResponse</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import FastAPI</span>
+<span class="line-any" title="No Anys on this line!">from fastapi.responses import ORJSONResponse</span>
 <span class="line-precise" title="No Anys on this line!">from redis.asyncio import Redis</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from utils.jaeger_config import configure_jaeger_tracer</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from db import elastic, redis</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x10)">app = FastAPI(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">app = FastAPI(</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)">    title=base_settings.project_name,</span>
 <span class="line-precise" title="No Anys on this line!">    docs_url="/api/openapi",</span>
 <span class="line-precise" title="No Anys on this line!">    openapi_url="/api/openapi.json",</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">    default_response_class=ORJSONResponse,</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x1)">    default_response_class=ORJSONResponse,</span>
 <span class="line-empty" title="No Anys on this line!">)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x6)">configure_jaeger_tracer(app, jaeger_settings.host, jaeger_settings.port)</span>
+Unimported (x7)">configure_jaeger_tracer(app, jaeger_settings.host, jaeger_settings.port)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x6)">@app.on_event("startup")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">@app.on_event("startup")</span>
 <span class="line-any" title="No Anys on this line!">async def startup():</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x4)
@@ -112,8 +111,8 @@ Unannotated (x10)
 Unimported (x4)">    elastic.es = AsyncElasticsearch(hosts=[f"{elastic_settings.host}:{elastic_settings.port}"])</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x6)">@app.on_event("shutdown")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">@app.on_event("shutdown")</span>
 <span class="line-any" title="No Anys on this line!">async def shutdown():</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x3)
@@ -124,17 +123,13 @@ Unimported (x1)">    await elastic.es.close()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
-Unimported (x2)">app.include_router(films.router, prefix="/api/v1/films", tags=["films"])</span>
+Unimported (x5)">app.include_router(films.router, prefix="/api/v1/films", tags=["films"])</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
-Unimported (x2)">app.include_router(genres.router, prefix="/api/v1/genres", tags=["genres"])</span>
+Unimported (x5)">app.include_router(genres.router, prefix="/api/v1/genres", tags=["genres"])</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
-Unimported (x2)">app.include_router(persons.router, prefix="/api/v1/persons", tags=["persons"])</span>
+Unimported (x5)">app.include_router(persons.router, prefix="/api/v1/persons", tags=["persons"])</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x1)
-Unimported (x2)">app.include_router(core.router, prefix="/api/v1", tags=["core"])</span>
+Unimported (x5)">app.include_router(core.router, prefix="/api/v1", tags=["core"])</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">if __name__ == "__main__":</span>

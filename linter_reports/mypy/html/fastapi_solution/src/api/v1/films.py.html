@@ -62,7 +62,7 @@
 <span class="line-precise" title="No Anys on this line!">from dataclasses import asdict</span>
 <span class="line-precise" title="No Anys on this line!">from http import HTTPStatus</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import APIRouter, Depends, HTTPException, Query</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import APIRouter, Depends, HTTPException, Query</span>
 <span class="line-any" title="No Anys on this line!">from models.film import FilmBrief, FilmDetail, FilmFilters, FilmProgress</span>
 <span class="line-any" title="No Anys on this line!">from models.shared import Paginator</span>
 <span class="line-any" title="No Anys on this line!">from services.auth import JWTBearerPremium</span>
@@ -71,28 +71,24 @@
 <span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x4)">router = APIRouter()</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">router = APIRouter()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x10)
-Unimported (x4)">@router.get("/search", response_model=list[FilmBrief])</span>
+Unimported (x7)
+Omitted Generics (x6)">@router.get("/search", response_model=list[FilmBrief])</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x4)">async def film_search(</span>
 <span class="line-precise" title="No Anys on this line!">    query: str | None = None,</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    sort: list[str] | None = Query(default=None),</span>
+Unimported (x2)">    sort: list[str] | None = Query(default=None),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    filters: FilmFilters = Depends(FilmFilters),</span>
+Unimported (x3)">    filters: FilmFilters = Depends(FilmFilters),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    paginator: Paginator = Depends(Paginator),</span>
+Unimported (x3)">    paginator: Paginator = Depends(Paginator),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    film_service: FilmService = Depends(get_film_service),</span>
+Unimported (x3)">    film_service: FilmService = Depends(get_film_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; list[FilmBrief]:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">    return await film_service.get_by_query(</span>
@@ -104,22 +100,18 @@ Omitted Generics (x2)">        query, sort, paginator.page_number, paginator.pag
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x10)
-Unimported (x4)">@router.get("/", response_model=list[FilmBrief])</span>
+Unimported (x7)
+Omitted Generics (x6)">@router.get("/", response_model=list[FilmBrief])</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x4)">async def film_list(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    sort: list[str] | None = Query(default=None),</span>
+Unimported (x2)">    sort: list[str] | None = Query(default=None),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    filters: FilmFilters = Depends(FilmFilters),</span>
+Unimported (x3)">    filters: FilmFilters = Depends(FilmFilters),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    paginator: Paginator = Depends(Paginator),</span>
+Unimported (x3)">    paginator: Paginator = Depends(Paginator),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    film_service: FilmService = Depends(get_film_service),</span>
+Unimported (x3)">    film_service: FilmService = Depends(get_film_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; list[FilmBrief]:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">    return await film_service.get_list(</span>
@@ -131,21 +123,18 @@ Omitted Generics (x2)">        sort, paginator.page_number, paginator.page_size,
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x18)
-Omitted Generics (x4)
-Unimported (x3)">@router.get("/{film_id}", dependencies=[Depends(JWTBearerPremium())], response_model=FilmDetail)</span>
+Unimported (x8)">@router.get("/{film_id}", dependencies=[Depends(JWTBearerPremium())], response_model=FilmDetail)</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)">async def film_details(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    film_id: str, film_service: FilmService = Depends(get_film_service)</span>
+Unimported (x3)">    film_id: str, film_service: FilmService = Depends(get_film_service)</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; FilmDetail:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x5)">    film = await film_service.get_by_id(film_id, model_cls=FilmDetail)</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    if not film:</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x2)">        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="film not found")</span>
+Unimported (x2)">        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="film not found")</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    return film</span>
 </pre></td>

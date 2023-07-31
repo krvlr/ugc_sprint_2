@@ -56,22 +56,22 @@
 <span id="L46" class="lineno"><a class="lineno" href="#L46">46</a></span>
 <span id="L47" class="lineno"><a class="lineno" href="#L47">47</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from pydantic import BaseSettings, Field</span>
+<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from pydantic import BaseSettings, Field</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class PostgreSettings(BaseSettings):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="AUTH_DB_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="AUTH_DB_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: str = Field(default="5432", env="AUTH_DB_PORT")</span>
+Unimported (x2)">    port: str = Field(default="5432", env="AUTH_DB_PORT")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    name: str = Field(default="auth_database", env="AUTH_DB_NAME")</span>
+Unimported (x2)">    name: str = Field(default="auth_database", env="AUTH_DB_NAME")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    user: str = Field(default="admin", env="AUTH_DB_USER")</span>
+Unimported (x2)">    user: str = Field(default="admin", env="AUTH_DB_USER")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    password: str = Field(default="admin", env="AUTH_DB_PASSWORD")</span>
+Unimported (x2)">    password: str = Field(default="admin", env="AUTH_DB_PASSWORD")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    tables: str = Field(default="users, user_actions_history", env="AUTH_DB_TABLES")</span>
+Unimported (x2)">    tables: str = Field(default="users, user_actions_history", env="AUTH_DB_TABLES")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    def get_db_uri(self) -&gt; str:</span>
 <span class="line-empty" title="No Anys on this line!">        return (</span>
@@ -88,9 +88,9 @@ Omitted Generics (x1)">    def get_tables(self) -&gt; list:</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class RedisSettings(BaseSettings):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="AUTH_REDIS_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="AUTH_REDIS_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: str = Field(default="6379", env="AUTH_REDIS_PORT")</span>
+Unimported (x2)">    port: str = Field(default="6379", env="AUTH_REDIS_PORT")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    class Config:</span>
 <span class="line-precise" title="No Anys on this line!">        env_file = ".env.tests"</span>
@@ -98,13 +98,13 @@ Explicit (x6)">    port: str = Field(default="6379", env="AUTH_REDIS_PORT")</spa
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class AuthApiSettings(BaseSettings):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="AUTH_API_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="AUTH_API_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: str = Field(default="8000", env="AUTH_API_PORT")</span>
+Unimported (x2)">    port: str = Field(default="8000", env="AUTH_API_PORT")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    uri: str = Field(default="/api/v1", env="AUTH_API_URI")</span>
+Unimported (x2)">    uri: str = Field(default="/api/v1", env="AUTH_API_URI")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    protocol: str = Field(default="http", env="AUTH_API_PROTOCOL")</span>
+Unimported (x2)">    protocol: str = Field(default="http", env="AUTH_API_PROTOCOL")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    def get_api_uri(self) -&gt; str:</span>
 <span class="line-precise" title="No Anys on this line!">        return f"{self.protocol}://{self.host}:{self.port}{self.uri}"</span>
@@ -113,15 +113,9 @@ Explicit (x6)">    protocol: str = Field(default="http", env="AUTH_API_PROTOCOL"
 <span class="line-precise" title="No Anys on this line!">        env_file = ".env.tests"</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">postgre_settings = PostgreSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">redis_settings = RedisSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">auth_api_settings = AuthApiSettings()</span>
+<span class="line-precise" title="No Anys on this line!">postgre_settings = PostgreSettings()</span>
+<span class="line-precise" title="No Anys on this line!">redis_settings = RedisSettings()</span>
+<span class="line-precise" title="No Anys on this line!">auth_api_settings = AuthApiSettings()</span>
 </pre></td>
 </tr></tbody>
 </table>

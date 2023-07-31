@@ -76,20 +76,20 @@
 <span id="L66" class="lineno"><a class="lineno" href="#L66">66</a></span>
 <span id="L67" class="lineno"><a class="lineno" href="#L67">67</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel, EmailStr, Field, validator</span>
+<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">from pydantic import BaseModel, EmailStr, Field, validator</span>
 <span class="line-any" title="No Anys on this line!">from utils.exceptions import AccountPasswordChangeException, AccountSignupException</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class SignupRequest(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    login: str = Field(..., title="Логин")</span>
+Unimported (x2)">    login: str = Field(..., title="Логин")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    email: EmailStr = Field(..., title="Почта")</span>
+Unimported (x4)">    email: EmailStr = Field(..., title="Почта")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    password: str = Field(..., title="Пароль")</span>
+Unimported (x2)">    password: str = Field(..., title="Пароль")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Error (x6)">    @validator("login")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">    @validator("login")</span>
 <span class="line-any" title="No Anys on this line!">    def login_alphanumeric(cls, v):</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x3)">        if not v.isalnum():</span>
@@ -101,8 +101,8 @@ Unimported (x1)">            raise AccountSignupException(</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x1)">        return v</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Error (x6)">    @validator("password")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">    @validator("password")</span>
 <span class="line-any" title="No Anys on this line!">    def password_length(cls, v):</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x3)">        if not (6 &lt;= len(v) &lt;= 72):</span>
@@ -118,31 +118,31 @@ Unannotated (x1)">        return v</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class AuthResponse(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    refresh_token: str = Field(..., title="Refresh токен")</span>
+Unimported (x2)">    refresh_token: str = Field(..., title="Refresh токен")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    access_token: str = Field(..., title="Access токен")</span>
+Unimported (x2)">    access_token: str = Field(..., title="Access токен")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class SigninRequest(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    login: str = Field(..., title="Логин")</span>
+Unimported (x2)">    login: str = Field(..., title="Логин")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    password: str = Field(..., title="Пароль")</span>
+Unimported (x2)">    password: str = Field(..., title="Пароль")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class SignoutRequest(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    refresh_token: str = Field(..., title="Refresh токен")</span>
+Unimported (x2)">    refresh_token: str = Field(..., title="Refresh токен")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class PasswordChangeRequest(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    old_password: str = Field(..., title="Старый пароль")</span>
+Unimported (x2)">    old_password: str = Field(..., title="Старый пароль")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    new_password: str = Field(..., title="Новый пароль")</span>
+Unimported (x2)">    new_password: str = Field(..., title="Новый пароль")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Error (x6)">    @validator("new_password")</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">    @validator("new_password")</span>
 <span class="line-any" title="No Anys on this line!">    def password_length(cls, v):</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x3)">        if not (6 &lt;= len(v) &lt;= 72):</span>
@@ -158,25 +158,25 @@ Unannotated (x1)">        return v</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class PaginatorRequest(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    page_num: int = Field(default=1, title="Номер страницы", ge=1)</span>
+Unimported (x2)">    page_num: int = Field(default=1, title="Номер страницы", ge=1)</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    page_size: int = Field(default=20, title="Размер страницы", ge=1, le=50)</span>
+Unimported (x2)">    page_size: int = Field(default=20, title="Размер страницы", ge=1, le=50)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class JwtPayload(BaseModel):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    id: str = Field(..., title="Идентификатор пользователя")</span>
+Unimported (x2)">    id: str = Field(..., title="Идентификатор пользователя")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    device_info: str = Field(..., title="Информация о устройстве")</span>
+Unimported (x2)">    device_info: str = Field(..., title="Информация о устройстве")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    is_active: str = Field(..., title="Признак активного пользователя")</span>
+Unimported (x2)">    is_active: str = Field(..., title="Признак активного пользователя")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    is_verified: str = Field(..., title="Признак верифицированного пользователя")</span>
+Unimported (x2)">    is_verified: str = Field(..., title="Признак верифицированного пользователя")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    is_admin: str = Field(..., title="Признак администратора")</span>
+Unimported (x2)">    is_admin: str = Field(..., title="Признак администратора")</span>
 <span class="line-any" title="Any Types on this line: 
 Omitted Generics (x2)
-Explicit (x6)">    roles: list = Field(..., title="Список ролей пользователя")</span>
+Unimported (x2)">    roles: list = Field(..., title="Список ролей пользователя")</span>
 </pre></td>
 </tr></tbody>
 </table>

@@ -89,7 +89,7 @@
 <span class="line-precise" title="No Anys on this line!">from dataclasses import dataclass</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">import pytest_asyncio</span>
-<span class="line-precise" title="No Anys on this line!">from aiohttp import ClientSession</span>
+<span class="line-any" title="No Anys on this line!">from aiohttp import ClientSession</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">from .settings import auth_api_settings</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -113,7 +113,8 @@ Omitted Generics (x4)">    body: dict</span>
 Unimported (x3)">@pytest_asyncio.fixture(scope="function")</span>
 <span class="line-any" title="No Anys on this line!">async def session():</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x5)">    session = ClientSession()</span>
+Unannotated (x2)
+Unimported (x1)">    session = ClientSession()</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x1)">    yield session</span>
 <span class="line-any" title="Any Types on this line: 
