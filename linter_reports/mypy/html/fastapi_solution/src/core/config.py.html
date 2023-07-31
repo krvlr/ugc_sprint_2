@@ -59,7 +59,7 @@
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import logging</span>
 <span class="line-precise" title="No Anys on this line!">import os</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseSettings, Field</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseSettings, Field</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class BaseConfig(BaseSettings):</span>
@@ -69,34 +69,34 @@
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class BaseSettings(BaseConfig):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    project_name: str = Field(default="movies", env="PROJECT_NAME")</span>
+Unimported (x2)">    project_name: str = Field(default="movies", env="PROJECT_NAME")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    secret_key: str = Field(default="SUPER-SECRET-KEY", env="JWT_SECRET_KEY")</span>
+Unimported (x2)">    secret_key: str = Field(default="SUPER-SECRET-KEY", env="JWT_SECRET_KEY")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    cache_expire_in_seconds: int = Field(default=60, env="CACHE_EXPIRE_SEC")</span>
+Unimported (x2)">    cache_expire_in_seconds: int = Field(default=60, env="CACHE_EXPIRE_SEC")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class RedisSettings(BaseConfig):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="REDIS_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="REDIS_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: int = Field(default=6379, env="REDIS_PORT")</span>
+Unimported (x2)">    port: int = Field(default=6379, env="REDIS_PORT")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class ElasticSettings(BaseConfig):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="ELASTIC_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="ELASTIC_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: str = Field(default=9200, env="ELASTIC_PORT")</span>
+Unimported (x2)">    port: str = Field(default=9200, env="ELASTIC_PORT")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class LoggerSettings(BaseConfig):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    debug: str = Field(default="True", env="DEBUG")</span>
+Unimported (x2)">    debug: str = Field(default="True", env="DEBUG")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    level: str = Field(default="INFO", env="LOGGING_LEVEL")</span>
+Unimported (x2)">    level: str = Field(default="INFO", env="LOGGING_LEVEL")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    format: str = Field(</span>
+Unimported (x2)">    format: str = Field(</span>
 <span class="line-precise" title="No Anys on this line!">        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", env="LOG_FORMAT"</span>
 <span class="line-empty" title="No Anys on this line!">    )</span>
 <span class="line-imprecise" title="Any Types on this line: 
@@ -105,28 +105,19 @@ Omitted Generics (x2)">    default_handlers: list = ["console"]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class JaegerSettings(BaseConfig):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    enable_tracer: bool = Field(default=True, env="ENABLE_TRACER")</span>
+Unimported (x2)">    enable_tracer: bool = Field(default=True, env="ENABLE_TRACER")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="127.0.0.1", env="JAEGER_HOST")</span>
+Unimported (x2)">    host: str = Field(default="127.0.0.1", env="JAEGER_HOST")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    port: int = Field(default=6831, env="JAEGER_PORT")</span>
+Unimported (x2)">    port: int = Field(default=6831, env="JAEGER_PORT")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">base_settings = BaseSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">redis_settings = RedisSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">elastic_settings = ElasticSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">logger_settings = LoggerSettings()</span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">jaeger_settings = JaegerSettings()</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">base_settings = BaseSettings()</span>
+<span class="line-precise" title="No Anys on this line!">redis_settings = RedisSettings()</span>
+<span class="line-precise" title="No Anys on this line!">elastic_settings = ElasticSettings()</span>
+<span class="line-precise" title="No Anys on this line!">logger_settings = LoggerSettings()</span>
+<span class="line-precise" title="No Anys on this line!">jaeger_settings = JaegerSettings()</span>
 </pre></td>
 </tr></tbody>
 </table>

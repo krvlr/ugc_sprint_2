@@ -53,7 +53,7 @@
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import abc</span>
 <span class="line-precise" title="No Anys on this line!">from abc import ABCMeta</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class Event(BaseModel):</span>
@@ -85,8 +85,7 @@ Unannotated (x3)">        return self.user_id, self.movie_id, self.timestamp_of_
 <span class="line-any" title="No Anys on this line!">    def transform(self, event):</span>
 <span class="line-empty" title="No Anys on this line!">        """Метод для преобразования строки к формату ClickHouse."""</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x3)
-Explicit (x1)">        return Event(</span>
+Unannotated (x3)">        return Event(</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x3)">            user_id=str(event["user_id"]),</span>
 <span class="line-any" title="Any Types on this line: 

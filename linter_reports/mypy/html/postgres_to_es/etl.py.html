@@ -108,7 +108,7 @@
 <span class="line-any" title="No Anys on this line!">from loguru import logger</span>
 <span class="line-precise" title="No Anys on this line!">from models import ESFilmworkData, ESGenreData, ESPersonData</span>
 <span class="line-precise" title="No Anys on this line!">from postgres_extractor import FILMWORKS_QUERY, GENRES_QUERY, PERSONS_QUERY, PostgresExtractor</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel</span>
 <span class="line-precise" title="No Anys on this line!">from settings import ETL_REPEAT_INTERVAL_TIME_SEC, REDIS_ADAPTER</span>
 <span class="line-precise" title="No Anys on this line!">from state import RedisStorage, State</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -119,24 +119,21 @@
 <span class="line-precise" title="No Anys on this line!">            "sql_query": FILMWORKS_QUERY,</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_name": "movies",</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_params": MOVIES_INDEX,</span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x1)">            "transform_model": ESFilmworkData,</span>
+<span class="line-precise" title="No Anys on this line!">            "transform_model": ESFilmworkData,</span>
 <span class="line-precise" title="No Anys on this line!">            "param_count": 3,</span>
 <span class="line-empty" title="No Anys on this line!">        },</span>
 <span class="line-precise" title="No Anys on this line!">        "person": {</span>
 <span class="line-precise" title="No Anys on this line!">            "sql_query": PERSONS_QUERY,</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_name": "persons",</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_params": PERSONS_INDEX,</span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x1)">            "transform_model": ESPersonData,</span>
+<span class="line-precise" title="No Anys on this line!">            "transform_model": ESPersonData,</span>
 <span class="line-precise" title="No Anys on this line!">            "param_count": 2,</span>
 <span class="line-empty" title="No Anys on this line!">        },</span>
 <span class="line-precise" title="No Anys on this line!">        "genre": {</span>
 <span class="line-precise" title="No Anys on this line!">            "sql_query": GENRES_QUERY,</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_name": "genres",</span>
 <span class="line-precise" title="No Anys on this line!">            "elastic_index_params": GENRES_INDEX,</span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x1)">            "transform_model": ESGenreData,</span>
+<span class="line-precise" title="No Anys on this line!">            "transform_model": ESGenreData,</span>
 <span class="line-precise" title="No Anys on this line!">            "param_count": 1,</span>
 <span class="line-empty" title="No Anys on this line!">        },</span>
 <span class="line-empty" title="No Anys on this line!">    }</span>
@@ -144,8 +141,7 @@ Explicit (x1)">            "transform_model": ESGenreData,</span>
 <span class="line-empty" title="No Anys on this line!">    @staticmethod</span>
 <span class="line-any" title="No Anys on this line!">    def get_etl(obj_type):</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x4)
-Explicit (x1)">        return ETLHandler.ETL(**ETLHandler.PARAMS[obj_type])</span>
+Unannotated (x4)">        return ETLHandler.ETL(**ETLHandler.PARAMS[obj_type])</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    class ETL(BaseModel):</span>
 <span class="line-precise" title="No Anys on this line!">        sql_query: str</span>

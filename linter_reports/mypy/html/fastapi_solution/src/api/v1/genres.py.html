@@ -48,7 +48,7 @@
 <span class="line-precise" title="No Anys on this line!">from dataclasses import asdict</span>
 <span class="line-precise" title="No Anys on this line!">from http import HTTPStatus</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import APIRouter, Depends, HTTPException, Query</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import APIRouter, Depends, HTTPException, Query</span>
 <span class="line-any" title="No Anys on this line!">from models.genre import GenreBrief, GenreDetail, GenreFilters</span>
 <span class="line-any" title="No Anys on this line!">from models.shared import Paginator</span>
 <span class="line-any" title="No Anys on this line!">from services.genres import GenreService, get_genre_service</span>
@@ -56,27 +56,23 @@
 <span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Explicit (x4)">router = APIRouter()</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">router = APIRouter()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x10)
-Unimported (x4)">@router.get("/", response_model=list[GenreBrief])</span>
+Unimported (x7)
+Omitted Generics (x6)">@router.get("/", response_model=list[GenreBrief])</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x4)">async def genre_list(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    sort: list[str] | None = Query(default=None),</span>
+Unimported (x2)">    sort: list[str] | None = Query(default=None),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    filters: GenreFilters = Depends(GenreFilters),</span>
+Unimported (x3)">    filters: GenreFilters = Depends(GenreFilters),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    paginator: Paginator = Depends(Paginator),</span>
+Unimported (x3)">    paginator: Paginator = Depends(Paginator),</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    genre_service: GenreService = Depends(get_genre_service),</span>
+Unimported (x3)">    genre_service: GenreService = Depends(get_genre_service),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; list[GenreBrief]:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">    return await genre_service.get_list(</span>
@@ -88,21 +84,18 @@ Omitted Generics (x2)">        sort, paginator.page_number, paginator.page_size,
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x13)
-Omitted Generics (x4)
-Unimported (x1)">@router.get("/{genre_id}", response_model=GenreDetail)</span>
+Unimported (x4)">@router.get("/{genre_id}", response_model=GenreDetail)</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x2)">async def genre_details(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    genre_id: str, genre_service: GenreService = Depends(get_genre_service)</span>
+Unimported (x3)">    genre_id: str, genre_service: GenreService = Depends(get_genre_service)</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; GenreDetail:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x5)">    genre = await genre_service.get_by_id(genre_id, model_cls=GenreDetail)</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    if not genre:</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x2)">        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="genre not found")</span>
+Unimported (x2)">        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="genre not found")</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    return genre</span>
 </pre></td>

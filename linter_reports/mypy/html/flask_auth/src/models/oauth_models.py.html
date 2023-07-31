@@ -35,30 +35,32 @@
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from abc import ABC</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel, EmailStr, Field</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel, EmailStr, Field</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class SocialUser(ABC, BaseModel):</span>
 <span class="line-precise" title="No Anys on this line!">    sub: str</span>
 <span class="line-precise" title="No Anys on this line!">    name: str</span>
-<span class="line-precise" title="No Anys on this line!">    email: EmailStr</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">    email: EmailStr</span>
 <span class="line-precise" title="No Anys on this line!">    email_verified: bool</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class GoogleUser(SocialUser):</span>
 <span class="line-precise" title="No Anys on this line!">    sub: str</span>
 <span class="line-precise" title="No Anys on this line!">    name: str</span>
-<span class="line-precise" title="No Anys on this line!">    email: EmailStr</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">    email: EmailStr</span>
 <span class="line-precise" title="No Anys on this line!">    email_verified: bool</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class YandexUser(SocialUser):</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    sub: str = Field(alias="id")</span>
+Unimported (x2)">    sub: str = Field(alias="id")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    name: str = Field(alias="login")</span>
+Unimported (x2)">    name: str = Field(alias="login")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    email: EmailStr = Field(alias="default_email")</span>
+Unimported (x4)">    email: EmailStr = Field(alias="default_email")</span>
 <span class="line-precise" title="No Anys on this line!">    email_verified: bool = True</span>
 </pre></td>
 </tr></tbody>

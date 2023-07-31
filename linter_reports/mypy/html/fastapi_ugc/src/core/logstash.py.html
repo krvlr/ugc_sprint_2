@@ -4,9 +4,9 @@
 <link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
 </head>
 <body>
-<h2>fastapi_solution.tests.functional.conftest</h2>
+<h2>src.core.logstash</h2>
 <table>
-<caption>fastapi_solution\tests\functional\conftest.py</caption>
+<caption>fastapi_ugc\src\core\logstash.py</caption>
 <tbody><tr>
 <td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
 <span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
@@ -34,50 +34,46 @@
 <span id="L24" class="lineno"><a class="lineno" href="#L24">24</a></span>
 <span id="L25" class="lineno"><a class="lineno" href="#L25">25</a></span>
 <span id="L26" class="lineno"><a class="lineno" href="#L26">26</a></span>
+<span id="L27" class="lineno"><a class="lineno" href="#L27">27</a></span>
 </pre></td>
-<td class="table-code"><pre><span class="line-any" title="No Anys on this line!">import pytest_asyncio</span>
-<span class="line-any" title="No Anys on this line!">from aiohttp import ClientSession</span>
+<td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import logging</span>
+<span class="line-any" title="No Anys on this line!">from logstash_async.handler import AsynchronousLogstashHandler, LogstashFormatter</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from .settings import test_settings</span>
-<span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">pytest_plugins = ["fixtures.elastic", "fixtures.redis"]</span>
+<span class="line-any" title="No Anys on this line!">from core.config import base_settings</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x3)">@pytest_asyncio.fixture(scope="function")</span>
-<span class="line-any" title="No Anys on this line!">async def session():</span>
+<span class="line-precise" title="No Anys on this line!">logger = logging.getLogger("")</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-any" title="No Anys on this line!">def config_logstash():</span>
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x2)
-Unimported (x1)">    session = ClientSession()</span>
+Unimported (x1)">    formatter = LogstashFormatter(</span>
+<span class="line-empty" title="No Anys on this line!">        tags=[</span>
+<span class="line-any" title="No Anys on this line!">            "events_ugc",</span>
+<span class="line-empty" title="No Anys on this line!">        ]</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x1)">    yield session</span>
+Unannotated (x2)
+Unimported (x1)">    handler = AsynchronousLogstashHandler(</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x3)">    await session.close()</span>
-<span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-any" title="Any Types on this line: 
-Unimported (x3)">@pytest_asyncio.fixture(scope="function")</span>
-<span class="line-any" title="No Anys on this line!">def make_get_request(session, redis_client):</span>
-<span class="line-any" title="Any Types on this line: 
-Omitted Generics (x2)
 Unannotated (x1)
-Error (x1)">    async def inner(endpoint: str, params: dict | None = None, flush_cache=True) -&gt; (int, dict):</span>
+Unimported (x1)">        base_settings.logstash_host,</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x1)">        if flush_cache:</span>
+Unannotated (x1)
+Unimported (x1)">        base_settings.logstash_port,</span>
+<span class="line-any" title="No Anys on this line!">        transport="logstash_async.transport.UdpTransport",</span>
+<span class="line-any" title="No Anys on this line!">        database_path="logstash.db",</span>
+<span class="line-empty" title="No Anys on this line!">    )</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x3)">            await redis_client.flushall()</span>
+Unannotated (x3)">    handler.formatter = formatter</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x3)">    logger.addHandler(handler)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-any" title="No Anys on this line!">        url = f"{test_settings.api_url}/{endpoint}"</span>
-<span class="line-any" title="Any Types on this line: 
-Unannotated (x4)
-Omitted Generics (x2)">        async with session.get(url, params=params) as response:</span>
-<span class="line-any" title="Any Types on this line: 
-Unannotated (x5)">            return response.status, await response.json()</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Error (x1)
-Unannotated (x1)">    return inner</span>
+<span class="line-any" title="Any Types on this line: 
+Unannotated (x1)">def add_log_request_id(request_id: str | None):</span>
+<span class="line-precise" title="No Anys on this line!">    logger.info(f"request_id {request_id}")</span>
 </pre></td>
 </tr></tbody>
 </table>

@@ -31,8 +31,8 @@
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from datetime import datetime</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import Query</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import Query</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class ReviewModel(BaseModel):</span>
@@ -45,7 +45,7 @@
 <span class="line-precise" title="No Anys on this line!">class CreateReviewModel(BaseModel):</span>
 <span class="line-precise" title="No Anys on this line!">    film_id: str</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    text: str = Query(default=None, min_length=5, max_length=1000)</span>
+Unimported (x2)">    text: str = Query(default=None, min_length=5, max_length=1000)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class UpdateReviewModel(CreateReviewModel):</span>

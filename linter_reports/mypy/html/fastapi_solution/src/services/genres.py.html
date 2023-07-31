@@ -64,7 +64,7 @@
 <span class="line-any" title="No Anys on this line!">from db.base_db import DataProvider, DbAdapter, ObjectName</span>
 <span class="line-any" title="No Anys on this line!">from db.elastic import get_elastic_data_provider</span>
 <span class="line-any" title="No Anys on this line!">from db.elastic_adapter import ElasticAdapter</span>
-<span class="line-precise" title="No Anys on this line!">from fastapi import Depends</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import Depends</span>
 <span class="line-any" title="No Anys on this line!">from models.genre import GenreBrief, GenreDetail</span>
 <span class="line-any" title="No Anys on this line!">from utils.caching import cache</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -117,8 +117,7 @@ Explicit (x6)">@lru_cache()</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">def get_genre_service(</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x5)
-Unimported (x1)">    data_provider: DataProvider = Depends(get_elastic_data_provider),</span>
+Unimported (x3)">    data_provider: DataProvider = Depends(get_elastic_data_provider),</span>
 <span class="line-empty" title="No Anys on this line!">) -&gt; GenreService:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x3)">    elastic_adapter = ElasticAdapter(</span>

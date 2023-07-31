@@ -75,7 +75,7 @@
 <span class="line-any" title="No Anys on this line!">from models.film import FilmBrief, FilmDetail</span>
 <span class="line-any" title="No Anys on this line!">from models.genre import GenreBrief, GenreDetail</span>
 <span class="line-any" title="No Anys on this line!">from models.person import PersonBrief, PersonDetail</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">class SortingOrder(Enum):</span>
@@ -106,7 +106,8 @@ Unannotated (x1)">    async def get(self, obj_name: str, obj_id: str):</span>
 <span class="line-precise" title="No Anys on this line!">        self.data_provider = data_provider</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!">    @abc.abstractmethod</span>
-<span class="line-imprecise" title="No Anys on this line!">    async def get_object_by_id(</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unimported (x1)">    async def get_object_by_id(</span>
 <span class="line-empty" title="No Anys on this line!">        self,</span>
 <span class="line-empty" title="No Anys on this line!">        obj_id: str,</span>
 <span class="line-empty" title="No Anys on this line!">        obj_name: ObjectName,</span>
@@ -116,7 +117,8 @@ Unannotated (x1)">    async def get(self, obj_name: str, obj_id: str):</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!">    @abc.abstractmethod</span>
 <span class="line-imprecise" title="Any Types on this line: 
-Omitted Generics (x2)">    async def search(</span>
+Omitted Generics (x2)
+Unimported (x1)">    async def search(</span>
 <span class="line-empty" title="No Anys on this line!">        self,</span>
 <span class="line-empty" title="No Anys on this line!">        obj_name: ObjectName,</span>
 <span class="line-empty" title="No Anys on this line!">        model: Type[FilmBrief | GenreBrief | PersonBrief],</span>

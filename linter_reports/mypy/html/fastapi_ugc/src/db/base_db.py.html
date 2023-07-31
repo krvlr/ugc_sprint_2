@@ -32,6 +32,14 @@
 <span id="L22" class="lineno"><a class="lineno" href="#L22">22</a></span>
 <span id="L23" class="lineno"><a class="lineno" href="#L23">23</a></span>
 <span id="L24" class="lineno"><a class="lineno" href="#L24">24</a></span>
+<span id="L25" class="lineno"><a class="lineno" href="#L25">25</a></span>
+<span id="L26" class="lineno"><a class="lineno" href="#L26">26</a></span>
+<span id="L27" class="lineno"><a class="lineno" href="#L27">27</a></span>
+<span id="L28" class="lineno"><a class="lineno" href="#L28">28</a></span>
+<span id="L29" class="lineno"><a class="lineno" href="#L29">29</a></span>
+<span id="L30" class="lineno"><a class="lineno" href="#L30">30</a></span>
+<span id="L31" class="lineno"><a class="lineno" href="#L31">31</a></span>
+<span id="L32" class="lineno"><a class="lineno" href="#L32">32</a></span>
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import abc</span>
 <span class="line-precise" title="No Anys on this line!">from abc import ABCMeta</span>
@@ -61,6 +69,16 @@ Omitted Generics (x4)">    async def update(self, collection: str, filters: dict
 <span class="line-empty" title="No Anys on this line!">    @abc.abstractmethod</span>
 <span class="line-imprecise" title="Any Types on this line: 
 Omitted Generics (x2)">    async def delete(self, collection: str, filters: dict) -&gt; None:</span>
+<span class="line-precise" title="No Anys on this line!">        pass</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!">    @abc.abstractmethod</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x2)">    async def count(self, collection: str, filters: dict) -&gt; int | None:</span>
+<span class="line-precise" title="No Anys on this line!">        pass</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-empty" title="No Anys on this line!">    @abc.abstractmethod</span>
+<span class="line-imprecise" title="Any Types on this line: 
+Omitted Generics (x3)">    async def avg(self, collection: str, pipeline: list | dict) -&gt; float | None:</span>
 <span class="line-precise" title="No Anys on this line!">        pass</span>
 </pre></td>
 </tr></tbody>

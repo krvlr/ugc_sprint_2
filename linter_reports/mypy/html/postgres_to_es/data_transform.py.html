@@ -24,7 +24,7 @@
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">from typing import Type</span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseModel</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseModel</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">from decorators import backoff</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -33,12 +33,13 @@
 <span class="line-any" title="Any Types on this line: 
 Unannotated (x5)">    @backoff()</span>
 <span class="line-imprecise" title="Any Types on this line: 
-Omitted Generics (x2)">    def validate_and_transform(</span>
+Omitted Generics (x2)
+Unimported (x1)">    def validate_and_transform(</span>
 <span class="line-empty" title="No Anys on this line!">        self, model: Type[BaseModel], objects: list[dict]</span>
 <span class="line-empty" title="No Anys on this line!">    ) -&gt; list[BaseModel]:</span>
 <span class="line-any" title="Any Types on this line: 
 Omitted Generics (x24)
-Explicit (x1)">        return [model(**dict(obj)) for obj in objects]</span>
+Unimported (x1)">        return [model(**dict(obj)) for obj in objects]</span>
 </pre></td>
 </tr></tbody>
 </table>

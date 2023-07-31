@@ -83,8 +83,8 @@
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import time</span>
 <span class="line-precise" title="No Anys on this line!">from functools import wraps</span>
 <span class="line-precise" title="No Anys on this line!">from uuid import uuid4</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import Field</span>
-<span class="line-precise" title="No Anys on this line!">from pydantic import BaseSettings</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import Field</span>
+<span class="line-any" title="No Anys on this line!">from pydantic import BaseSettings</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">REPEAT_TEST_COUNT = 5</span>
 <span class="line-empty" title="No Anys on this line!"></span>
@@ -149,22 +149,20 @@ Unannotated (x1)">    return timeit_wrapper</span>
 <span class="line-empty" title="No Anys on this line!">    """Общие настройки"""</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    dbname: str = Field(default="postgres", env="POSTGRES_NAME")</span>
+Unimported (x2)">    dbname: str = Field(default="postgres", env="POSTGRES_NAME")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    username: str = Field(default="postgres", env="POSTGRES_USER")</span>
+Unimported (x2)">    username: str = Field(default="postgres", env="POSTGRES_USER")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    password: str = Field(default="postgres", env="POSTGRES_PASSWORD")</span>
+Unimported (x2)">    password: str = Field(default="postgres", env="POSTGRES_PASSWORD")</span>
 <span class="line-any" title="Any Types on this line: 
-Explicit (x6)">    host: str = Field(default="localhost", env="POSTGRES_HOST")</span>
+Unimported (x2)">    host: str = Field(default="localhost", env="POSTGRES_HOST")</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">    class Config:</span>
 <span class="line-precise" title="No Anys on this line!">        env_file = ".env"</span>
 <span class="line-precise" title="No Anys on this line!">        env_file_encoding = "utf-8"</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="Any Types on this line: 
-Omitted Generics (x2)
-Explicit (x1)">perf_settings = PerformanceSettings()</span>
+<span class="line-precise" title="No Anys on this line!">perf_settings = PerformanceSettings()</span>
 </pre></td>
 </tr></tbody>
 </table>

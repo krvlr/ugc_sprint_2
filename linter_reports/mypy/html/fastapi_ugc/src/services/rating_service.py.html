@@ -4,9 +4,9 @@
 <link rel="stylesheet" type="text/css" href="../../../../mypy-html.css">
 </head>
 <body>
-<h2>src.services.review_service</h2>
+<h2>src.services.rating_service</h2>
 <table>
-<caption>fastapi_ugc\src\services\review_service.py</caption>
+<caption>fastapi_ugc\src\services\rating_service.py</caption>
 <tbody><tr>
 <td class="table-lines"><pre><span id="L1" class="lineno"><a class="lineno" href="#L1">1</a></span>
 <span id="L2" class="lineno"><a class="lineno" href="#L2">2</a></span>
@@ -67,83 +67,121 @@
 <span id="L57" class="lineno"><a class="lineno" href="#L57">57</a></span>
 <span id="L58" class="lineno"><a class="lineno" href="#L58">58</a></span>
 <span id="L59" class="lineno"><a class="lineno" href="#L59">59</a></span>
+<span id="L60" class="lineno"><a class="lineno" href="#L60">60</a></span>
+<span id="L61" class="lineno"><a class="lineno" href="#L61">61</a></span>
+<span id="L62" class="lineno"><a class="lineno" href="#L62">62</a></span>
+<span id="L63" class="lineno"><a class="lineno" href="#L63">63</a></span>
+<span id="L64" class="lineno"><a class="lineno" href="#L64">64</a></span>
+<span id="L65" class="lineno"><a class="lineno" href="#L65">65</a></span>
+<span id="L66" class="lineno"><a class="lineno" href="#L66">66</a></span>
+<span id="L67" class="lineno"><a class="lineno" href="#L67">67</a></span>
+<span id="L68" class="lineno"><a class="lineno" href="#L68">68</a></span>
+<span id="L69" class="lineno"><a class="lineno" href="#L69">69</a></span>
+<span id="L70" class="lineno"><a class="lineno" href="#L70">70</a></span>
+<span id="L71" class="lineno"><a class="lineno" href="#L71">71</a></span>
+<span id="L72" class="lineno"><a class="lineno" href="#L72">72</a></span>
+<span id="L73" class="lineno"><a class="lineno" href="#L73">73</a></span>
+<span id="L74" class="lineno"><a class="lineno" href="#L74">74</a></span>
+<span id="L75" class="lineno"><a class="lineno" href="#L75">75</a></span>
+<span id="L76" class="lineno"><a class="lineno" href="#L76">76</a></span>
 </pre></td>
 <td class="table-code"><pre><span class="line-precise" title="No Anys on this line!">import logging</span>
 <span class="line-precise" title="No Anys on this line!">from datetime import datetime</span>
 <span class="line-precise" title="No Anys on this line!">from functools import lru_cache</span>
-<span class="line-precise" title="No Anys on this line!">from http import HTTPStatus</span>
-<span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-any" title="No Anys on this line!">from fastapi import Depends, HTTPException</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from core.config import mongodb_settings</span>
 <span class="line-any" title="No Anys on this line!">from db.base_db import DbAdapter</span>
 <span class="line-any" title="No Anys on this line!">from db.mongodb_adapter import get_mongodb_adapter</span>
-<span class="line-any" title="No Anys on this line!">from models.review import ReviewModel</span>
+<span class="line-any" title="No Anys on this line!">from fastapi import Depends</span>
+<span class="line-any" title="No Anys on this line!">from models.rating import RatingModel, AvgRating, CountRating</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="No Anys on this line!">from services.base_service import BaseService</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="No Anys on this line!">logger = logging.getLogger(__name__)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
-<span class="line-precise" title="No Anys on this line!">class ReviewService(BaseService):</span>
+<span class="line-precise" title="No Anys on this line!">class RatingService(BaseService):</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)">    def __init__(self, db_adapter: DbAdapter):</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">        super().__init__(db_adapter=db_adapter, collection=mongodb_settings.collection_review)</span>
+Unimported (x3)">        super().__init__(db_adapter=db_adapter, collection=mongodb_settings.collection_rating)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-imprecise" title="Any Types on this line: 
 Unimported (x1)">    async def get_list(</span>
-<span class="line-empty" title="No Anys on this line!">        self, film_id: str, user_id: str, offset: int, limit: int</span>
-<span class="line-empty" title="No Anys on this line!">    ) -&gt; list[ReviewModel]:</span>
-<span class="line-precise" title="No Anys on this line!">        if film_id:</span>
-<span class="line-precise" title="No Anys on this line!">            review_list = await self.db_adapter.find(</span>
-<span class="line-precise" title="No Anys on this line!">                self.collection, {"film_id": film_id}, limit, offset</span>
-<span class="line-empty" title="No Anys on this line!">            )</span>
-<span class="line-empty" title="No Anys on this line!">        else:</span>
-<span class="line-precise" title="No Anys on this line!">            review_list = await self.db_adapter.find(</span>
-<span class="line-precise" title="No Anys on this line!">                self.collection, {"user_id": user_id}, limit, offset</span>
-<span class="line-empty" title="No Anys on this line!">            )</span>
+<span class="line-empty" title="No Anys on this line!">        self,</span>
+<span class="line-empty" title="No Anys on this line!">        user_id: str,</span>
+<span class="line-empty" title="No Anys on this line!">        offset: int,</span>
+<span class="line-empty" title="No Anys on this line!">        limit: int,</span>
+<span class="line-empty" title="No Anys on this line!">    ) -&gt; list[RatingModel]:</span>
+<span class="line-precise" title="No Anys on this line!">        rating_list = await self.db_adapter.find(</span>
+<span class="line-precise" title="No Anys on this line!">            self.collection,</span>
+<span class="line-precise" title="No Anys on this line!">            {"user_id": user_id},</span>
+<span class="line-precise" title="No Anys on this line!">            limit=limit,</span>
+<span class="line-precise" title="No Anys on this line!">            offset=offset,</span>
+<span class="line-empty" title="No Anys on this line!">        )</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)">        return [ReviewModel(**review) for review in review_list]</span>
+Unimported (x2)">        return [RatingModel(**rating) for rating in rating_list]</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def create(self, user_id: str, film_id: str, text: str) -&gt; ReviewModel:</span>
-<span class="line-precise" title="No Anys on this line!">        review = await self.db_adapter.find_one(</span>
+Unimported (x1)">    async def create(self, user_id: str, film_id: str, rating_score: int) -&gt; RatingModel:</span>
+<span class="line-precise" title="No Anys on this line!">        rating = await self.db_adapter.find_one(</span>
 <span class="line-precise" title="No Anys on this line!">            self.collection, {"user_id": user_id, "film_id": film_id}</span>
 <span class="line-empty" title="No Anys on this line!">        )</span>
-<span class="line-precise" title="No Anys on this line!">        if review:</span>
-<span class="line-precise" title="No Anys on this line!">            logger.info(f"Закладка уже существует для user_id: {user_id}, film_id: {film_id}")</span>
+<span class="line-precise" title="No Anys on this line!">        if rating:</span>
+<span class="line-precise" title="No Anys on this line!">            logger.info(f"Рейтинг уже выставлен для user_id: {user_id}, film_id: {film_id}")</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)">            raise HTTPException(status_code=HTTPStatus.BAD_REQUEST)</span>
+Unimported (x2)">            return RatingModel(**rating)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x2)">        review = ReviewModel(user_id=user_id, film_id=film_id, text=text, created=datetime.now())</span>
-<span class="line-precise" title="No Anys on this line!">        await self.db_adapter.insert(self.collection, review.model_dump())</span>
-<span class="line-precise" title="No Anys on this line!">        return review</span>
+Unimported (x2)">        rating = RatingModel(</span>
+<span class="line-precise" title="No Anys on this line!">            user_id=user_id, film_id=film_id, rating_score=rating_score, created=datetime.now()</span>
+<span class="line-empty" title="No Anys on this line!">        )</span>
+<span class="line-precise" title="No Anys on this line!">        await self.db_adapter.insert(self.collection, rating.model_dump())</span>
+<span class="line-precise" title="No Anys on this line!">        return rating</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-imprecise" title="Any Types on this line: 
-Unimported (x1)">    async def update(self, user_id: str, film_id: str, text: str) -&gt; ReviewModel:</span>
+Unimported (x1)">    async def update(self, user_id: str, film_id: str, rating_score: int) -&gt; RatingModel:</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">        review = ReviewModel(user_id=user_id, film_id=film_id, text=text, created=datetime.now())</span>
+Unimported (x3)">        rating = RatingModel(</span>
+<span class="line-precise" title="No Anys on this line!">            user_id=user_id, film_id=film_id, rating_score=rating_score, created=datetime.now()</span>
+<span class="line-empty" title="No Anys on this line!">        )</span>
 <span class="line-precise" title="No Anys on this line!">        await self.db_adapter.update(</span>
 <span class="line-precise" title="No Anys on this line!">            self.collection,</span>
 <span class="line-precise" title="No Anys on this line!">            {"user_id": user_id, "film_id": film_id},</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x3)">            review.model_dump(),</span>
+Unimported (x3)">            rating.model_dump(),</span>
 <span class="line-empty" title="No Anys on this line!">        )</span>
 <span class="line-any" title="Any Types on this line: 
-Unimported (x1)">        return review</span>
+Unimported (x1)">        return rating</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unimported (x1)">    async def get_count_of_ratings(self, film_id: str) -&gt; CountRating:</span>
+<span class="line-precise" title="No Anys on this line!">        rating_count = await self.db_adapter.count(self.collection, {"film_id": film_id})</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        return CountRating(film_id=film_id, count_rating_score=rating_count)</span>
+<span class="line-empty" title="No Anys on this line!"></span>
+<span class="line-imprecise" title="Any Types on this line: 
+Unimported (x1)">    async def get_avg_ratings_of_film(self, film_id: str) -&gt; AvgRating:</span>
+<span class="line-precise" title="No Anys on this line!">        pipeline = [</span>
+<span class="line-precise" title="No Anys on this line!">            {"$match": {"film_id": film_id}},</span>
+<span class="line-precise" title="No Anys on this line!">            {"$group": {"_id": "@film_id", "avg_score": {"$avg": "$rating_score"}}},</span>
+<span class="line-empty" title="No Anys on this line!">        ]</span>
+<span class="line-precise" title="No Anys on this line!">        avg_rating = await self.db_adapter.avg(self.collection, pipeline)</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x2)">        return AvgRating(film_id=film_id, avg_rating_score=avg_rating)</span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-empty" title="No Anys on this line!"></span>
 <span class="line-precise" title="Any Types on this line: 
 Omitted Generics (x6)
 Explicit (x6)">@lru_cache()</span>
 <span class="line-any" title="Any Types on this line: 
-Unannotated (x1)
-Unimported (x3)">def get_review_service(db_adapter=Depends(get_mongodb_adapter)) -&gt; ReviewService:</span>
+Unannotated (x1)">def get_rating_service(</span>
+<span class="line-any" title="Any Types on this line: 
+Unimported (x3)">    db_adapter=Depends(get_mongodb_adapter),</span>
+<span class="line-empty" title="No Anys on this line!">) -&gt; RatingService:</span>
 <span class="line-any" title="Any Types on this line: 
 Unimported (x1)
-Unannotated (x1)">    return ReviewService(db_adapter)</span>
+Unannotated (x1)">    return RatingService(db_adapter)</span>
 </pre></td>
 </tr></tbody>
 </table>
