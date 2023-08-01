@@ -6,7 +6,7 @@ import aiohttp
 from .settings import test_settings
 from .utils.jwt_creator import get_jwt_token
 
-pytest_plugins = ["fixtures.mongo_fixtures",]
+pytest_plugins = ["fixtures.mongo_fixtures", ]
 
 
 @pytest_asyncio.fixture(scope='function')
