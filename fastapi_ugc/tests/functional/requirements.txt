@@ -1,8 +1,8 @@
 python-dotenv==0.21.0
-redis==4.5.1
-elasticsearch[async]==7.9.1
+redis
+elasticsearch[async]
 pydantic==2.0.3
-pytest==7.2.2
-pytest-asyncio==0.21.0
-aiohttp==3.8.4
+pytest==7.2.1
+pytest-asyncio==0.20.3
+aiohttp
 backoff==2.2.1

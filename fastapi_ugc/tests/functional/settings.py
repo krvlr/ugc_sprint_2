@@ -5,11 +5,9 @@ from pydantic_settings import BaseSettings
 
 
 class TestSettings(BaseSettings):
-    elastic_host: str = Field(default="elasticsearchelk", env="ELASTIC_HOST")
-    elastic_port: str = Field(default=9200, env="ELASTIC_PORT")
-    redis_host: str = Field(default="redis", env="REDIS_HOST")
-    redis_port: int = Field(default=6379, env="REDIS_PORT")
-    api_url: str = Field(default="http://api:8000/api/v1", evn="API_URL")
+    #service_url: str = Field(default="http://127.0.0.1:8000/api/v1/ugc2", evn="API_URL")
+    service_url: str = Field(default="http://api-ugc2:8000/api/v1/ugc2", evn="API_URL")
+    secret_key: str = Field(default="SUPER-SECRET-KEY", evn="JWT_SECRET_KEY")
 
     class Config:
         env_file = ".env"

@@ -177,7 +177,6 @@ services:
       - ./deploy/filebeat.yml:/usr/share/filebeat/filebeat.yml
     depends_on:
       - api-ugc2
-      - nginx
       - logstashelk
       - elasticsearchelk
       - kibanaelk
@@ -200,6 +199,8 @@ services:
       retries: 3
     env_file:
       - ../../../.env
+    ports:
+      - 8000:8000
     networks:
       - ugc_network
     expose:
@@ -209,10 +210,6 @@ services:
   tests:
     image: fastapi-ugc-image:1
     pull_policy: never
-#    container_name: tests
-#    depends_on:
-#      api-ugc2:
-#        condition: service_healthy
     env_file:
       - ../../../.env
     networks:
