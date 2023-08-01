@@ -41,7 +41,7 @@ def make_get_request(session: aiohttp.ClientSession):
                                      params=query_data)
         try:
             resp_json = await response.json()
-        except:
+        except Exception:
             resp_json = str(response)
         return {
             'body': resp_json,
@@ -62,7 +62,7 @@ def make_post_request(session: aiohttp.ClientSession):
                                       data=json.dumps(data))
         try:
             resp_json = await response.json()
-        except:
+        except Exception:
             resp_json = str(response)
         return {
             'body': resp_json,
@@ -83,7 +83,7 @@ def make_patch_request(session: aiohttp.ClientSession):
                                        data=json.dumps(data))
         try:
             resp_json = await response.json()
-        except:
+        except Exception:
             resp_json = str(response)
         return {
             'body': resp_json,
@@ -104,7 +104,7 @@ def make_put_request(session: aiohttp.ClientSession):
                                      data=json.dumps(data))
         try:
             resp_json = await response.json()
-        except:
+        except Exception:
             resp_json = str(response)
         return {
             'body': resp_json,
@@ -125,7 +125,7 @@ def make_delete_request(session: aiohttp.ClientSession):
                                         data=json.dumps(data))
         try:
             resp_json = await response.json()
-        except:
+        except Exception:
             resp_json = str(response)
         return {
             'body': resp_json,
