@@ -1,6 +1,4 @@
 python-dotenv==0.21.0
-redis
-elasticsearch[async]
 pydantic==2.0.3
 pytest==7.2.1
 pytest-asyncio==0.20.3

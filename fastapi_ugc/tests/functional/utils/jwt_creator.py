@@ -1,7 +1,7 @@
 import datetime
 
 import jwt
-from settings import test_settings
+from functional.settings import test_settings
 
 
 def get_jwt_token():
