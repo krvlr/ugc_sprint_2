@@ -1,0 +1,220 @@
+networks:
+  ugc_network:
+
+services:
+  mongors1n1:
+    container_name: mongors1n1_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors1n2:
+    container_name: mongors1n2_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors1n3:
+    container_name: mongors1n3_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors1 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n1:
+    container_name: mongors2n1_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n2:
+    container_name: mongors2n2_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongors2n3:
+    container_name: mongors2n3_test
+    image: mongo
+    command: mongod --shardsvr --replSet mongors2 --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg1:
+    container_name: mongocfg1_test
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg2:
+    container_name: mongocfg2_test
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongocfg3:
+    container_name: mongocfg3_test
+    image: mongo
+    command: mongod --configsvr --replSet mongors1conf --dbpath /data/db --port 27017
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+      - /data/db
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  mongos1:
+    container_name: mongos1_test
+    image: mongo
+    depends_on:
+      - mongocfg1
+      - mongocfg2
+    command: mongos --configdb mongors1conf/mongocfg1:27017,mongocfg2:27017,mongocfg3:27017 --port 27017 --bind_ip_all
+    volumes:
+      - ./mingodb_scripts:/scripts
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 27019:27017
+    expose:
+      - "27017"
+    networks:
+      - ugc_network
+
+  logstashelk:
+    image: logstash:7.10.1
+    container_name: test-logstashelk
+    ports:
+      - "5044:5044/udp"
+    env_file:
+      - ../../../.env
+    volumes:
+      - /tmp/logs/nginx/:/var/log/nginx/:ro
+      - ./deploy/logstash.conf:/config/logstash.conf:ro
+    command: logstash -f /config/logstash.conf
+
+  elasticsearchelk:
+    image: ghcr.io/yp-middle-python-24/elasticsearch:7.10.2
+    container_name: test-elasticsearchelk
+    environment:
+      discovery.type: single-node
+    ports:
+      - 9200:9200
+    volumes:
+      - /tmp/esdata:/tmp/elasticsearch/data
+
+  kibanaelk:
+    image: ghcr.io/yp-middle-python-24/kibana:7.10.2
+    container_name: test-kibanaelk
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearchelk
+    env_file:
+      - ../../../.env
+
+  filebeatelk:
+    image: ghcr.io/yp-middle-python-24/filebeat:7.10.2
+    container_name: test-filebeatelk
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - /tmp/logs/nginx:/var/log/nginx:ro
+      - ./deploy/filebeat.yml:/usr/share/filebeat/filebeat.yml
+    depends_on:
+      - api-ugc2
+      - logstashelk
+      - elasticsearchelk
+      - kibanaelk
+    links:
+      - logstashelk
+
+
+  api-ugc2:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: api-ugc2-test
+    image: fastapi-ugc-image:1
+    pull_policy: never
+    restart: always
+    healthcheck:
+      test: "curl -H 'X-Request-Id: ${AUTH_HEALTHCHECK_REQUEST_ID}' --fail http://127.0.0.1:8000/api/v1/health || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - ../../../.env
+    ports:
+      - 8000:8000
+    networks:
+      - ugc_network
+    expose:
+      - "8000"
+
+
+  tests:
+    image: fastapi-ugc-image:1
+    pull_policy: never
+    env_file:
+      - ../../../.env
+    networks:
+      - ugc_network
+    entrypoint: >
+      sh -c "pip install -r ./tests/functional/requirements.txt
+      && python3 ./tests/functional/utils/wait_for_mongo.py
+      && pytest ./tests/functional/src"
